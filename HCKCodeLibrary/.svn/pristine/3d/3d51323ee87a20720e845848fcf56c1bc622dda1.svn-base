@@ -1,0 +1,292 @@
+package hck.readWrite;
+
+import hck.common.CommonData;
+import hck.common.CommonFunction;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.HWPFDocumentCore;
+import org.apache.poi.hwpf.usermodel.CharacterRun;
+import org.apache.poi.hwpf.usermodel.Paragraph;
+import org.apache.poi.hwpf.usermodel.Range;
+import org.apache.poi.hwpf.usermodel.Table;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+
+public class ReadInWord {
+	public final static String[] filterData = { "-  PAGE ", "-  PAGE ",
+			"\r", "\n" };
+	public final static String[][] filterHyperLink = {
+			{ "HYPERLINK \"http://", "" }, { "HYPERLINK \"", "" } };
+	public final static String[] replaceData = { "\r", "\n", "", "", "", "", "" };
+	public final static Character WBSign = Character.toChars(11)[0];
+	public final static int INDEX_PARAGRAPHTYPE_Normal = 0;
+	public final static int INDEX_PARAGRAPHTYPE_NoBlankRow = 1;
+	// public final static char[] sentenceSign = { '。', '？', '！', '.', '?', '!'
+	// };
+	private File file;
+	private HWPFDocument document;
+	private Range range;
+
+	public ReadInWord() {
+		file = CommonData.DefaultFile;
+		document = getData();
+		range = document.getRange();
+	}
+
+	public ReadInWord(File file) {
+		this.file = file;
+		document = getData();
+		range = document.getRange();
+	}
+
+	public String getWholeInString() {
+		return getData().getDocumentText();
+	}
+
+	public String getParagraph(int paragraphIndex, int PARAGRAPHTYPE) {
+		String paragraph = range.getParagraph(paragraphIndex).text();
+
+		for (int i = 0; i < replaceData.length; i++) {
+			int index = paragraph.indexOf(replaceData[i]);
+			if (index >= 0) {
+				String bs = paragraph.substring(0, index);
+				String es = paragraph
+						.substring(index + replaceData[i].length());
+				paragraph = bs + es;
+			}
+		}
+
+		for (int i = 0; i < filterHyperLink.length; i++) {
+			paragraph = replaceHyperLink(paragraph, filterHyperLink[i]);
+		}
+
+		switch (PARAGRAPHTYPE) {
+		case 0:
+			return paragraph;
+		case 1:
+			if (Filter(paragraph)) {
+				return paragraph;
+			}
+		}
+		return null;
+	}
+
+	public ArrayList<String> getParagraphs(int PARAGRAPHTYPE) {
+		ArrayList<String> outData = new ArrayList<String>();
+		for (int i = 0; i < range.numParagraphs(); i++) {
+			String s = getParagraph(i, PARAGRAPHTYPE);
+			if (s != null) {
+				outData.add(s);
+			}
+		}
+		return outData;
+	}
+
+	public Paragraph getParagraphProperties(int paragraphIndex,
+			int PARAGRAPHTYPE) {
+		int pi = getParagraphIndex(paragraphIndex, PARAGRAPHTYPE);
+		return (pi >= 0) ? range.getParagraph(pi) : null;
+	}
+
+	public CharacterRun getCharacterProperties(int index, int paragraphIndex,
+			int PARAGRAPHTYPE) {
+		Paragraph p = getParagraphProperties(paragraphIndex, PARAGRAPHTYPE);
+		return (p != null && index < p.numCharacterRuns()) ? p
+				.getCharacterRun(index) : null;
+	}
+
+	public Character getCharacter(int index, int paragraphIndex,
+			int PARAGRAPHTYPE) {
+		String s = null;
+		int pi = getParagraphIndex(paragraphIndex, PARAGRAPHTYPE);
+		if (pi >= 0) {
+			s = getParagraph(pi, PARAGRAPHTYPE);
+		}
+		return (s != null && index < s.length()) ? s.charAt(index) : null;
+	}
+
+	public Table getTable(int paragraphIndex, int PARAGRAPHTYPE) {
+		Paragraph p = null;
+		boolean inTable = false;
+		int pi = getParagraphIndex(paragraphIndex, PARAGRAPHTYPE);
+		for (int i = 0; i <= pi; i++) {
+			Paragraph tp = range.getParagraph(i);
+			if (tp.isInTable()) {
+				if (!inTable) {
+					p = tp;
+					inTable = true;
+				}
+			} else {
+				inTable = false;
+			}
+		}
+
+		return (p != null) ? range.getTable(p) : null;
+	}
+
+	public int[] getTableIndex(int paragraphIndex, int PARAGRAPHTYPE) {
+		Table table = getTable(paragraphIndex, PARAGRAPHTYPE);
+		int pi = getParagraphIndex(paragraphIndex, PARAGRAPHTYPE);
+		String ps = getParagraph(pi, PARAGRAPHTYPE);
+
+		if (table == null) {
+			return null;
+		}
+
+		for (int i = 0; i < table.numRows(); i++) {
+			for (int j = 0; j < table.getRow(i).numCells(); j++) {
+				String ts = table.getRow(i).getCell(j).text();
+				if (ts.contains(ps))
+					return new int[] { i, j };
+			}
+		}
+		return null;
+	}
+
+	private HWPFDocument getData() {
+		try {
+			POIFSFileSystem fis = new POIFSFileSystem(new FileInputStream(file));
+			return new HWPFDocument(fis);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	private boolean Filter(String inString) {
+		if (inString.trim().length() == 0)
+			return false;
+		if (inString.equals(" "))
+			return false;
+		for (int i = 0; i < filterData.length; i++) {
+			if (inString.trim().toLowerCase()
+					.contains(filterData[i].toLowerCase()))
+				return false;
+		}
+		return true;
+	}
+
+	private int getParagraphIndex(int paragraphIndex, int PARAGRAPHTYPE) {
+		switch (PARAGRAPHTYPE) {
+		case 0:
+			return paragraphIndex;
+		case 1:
+			return getParagraphLastIndex(paragraphIndex);
+		}
+		return -1;
+	}
+
+	private int getParagraphLastIndex(int paragraphIndex) {
+		int c = -1;
+		for (int i = 0; i < range.numParagraphs(); i++) {
+			String s = getParagraph(i, INDEX_PARAGRAPHTYPE_NoBlankRow);
+			if (s != null) {
+				c++;
+			}
+			if (c == paragraphIndex) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	private String replaceHyperLink(String paragraph, String[] filter) {
+		ArrayList<Integer> HLindexs = CommonFunction.getAllIndexOf(paragraph,
+				filter[0]);
+		String ts = paragraph;
+		int bIndex = 0;
+		String les = paragraph;
+		String s = "";
+
+		for (int i = 0; i < HLindexs.size(); i++) {
+			int HLindex = HLindexs.get(i);
+			String rs = paragraph.substring(HLindex, ts.indexOf(filter[1])
+					+ filter[1].length());
+			String bs = paragraph.substring(bIndex, HLindex);
+			String es = paragraph.substring(HLindex + rs.length());
+
+			ts = bs + CommonFunction.getSpace(rs.length()) + es;
+			bIndex = HLindex + rs.length();
+			les = es;
+			s += bs;
+		}
+		s += les;
+		return s;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public HWPFDocumentCore getDocument() {
+		return document;
+	}
+
+	public void resetDocument() {
+		this.document = getData();
+	}
+
+	public static void main(String[] args) throws FileNotFoundException,
+			IOException {
+		ReadInWord riw = new ReadInWord(new File(CommonData.DefaultPathParent,
+				"20130430c now StarHub.doc"));
+		int PARAGRAPHTYPE = ReadInWord.INDEX_PARAGRAPHTYPE_NoBlankRow;
+		// int PARAGRAPHTYPE = ReadInWord.INDEX_PARAGRAPHTYPE_Normal;
+
+		ArrayList<String> s = riw.getParagraphs(PARAGRAPHTYPE);
+		for (int i = 0; i < s.size(); i++) {
+			System.out.println(i + ": " + s.get(i));
+			// System.out.println(riw.getCharacterProperties(0, i,
+			// PARAGRAPHTYPE).text());
+		}
+		System.out.println();
+
+		// for (int i = 0; i < s.size(); i++) {
+		// ArrayList<Integer> indexs = CommonFunction.getAllIndexOfWord(
+		// s.get(i), "now");
+		// for (int j = 0; j < indexs.size(); j++) {
+		// Integer index = indexs.get(j);
+		// System.out.println(i + ": "
+		// + s.get(i).substring(index, index + "now".length()));
+		// }
+		// }
+
+		// for (int i = 0; i < s.size(); i++) {
+		// ArrayList<Integer[]> indexs = CommonFunction.getAllIndexOfURL(s
+		// .get(i));
+		// for (int j = 0; j < indexs.size(); j++) {
+		// Integer[] index = indexs.get(j);
+		// System.out.println(i + ": "
+		// + s.get(i).substring(index[0], index[1]));
+		// }
+		// }
+		// ArrayList<Integer[]> indexs =
+		// CommonFunction.getAllIndexOfURL(s.get(22));
+		// System.out.println(indexs.size());
+
+		// int[] n = riw.getTableIndex(18, PARAGRAPHTYPE);
+		// System.out.println((n != null)? n[0] + " " + n[1]:null);
+
+		// System.out.println("Char: " + riw.getCharacter(0, 6, PARAGRAPHTYPE));
+		// System.out.println("Char2: "
+		// + riw.getCharacterProperties(0, 14, PARAGRAPHTYPE)
+		// .getFontSize());
+		// System.out.println("Char3: "
+		// + riw.getCharacterProperties(0, 15, PARAGRAPHTYPE).isBold());
+		// System.out.println("Char4: "
+		// + riw.getCharacterProperties(0, 18, PARAGRAPHTYPE));
+		// for (int i = 0; i < 76; i++) {
+		// riw.getCharacterProperties(0, i, PARAGRAPHTYPE);
+		// System.out.println(i + ": ");
+		// }
+	}
+}

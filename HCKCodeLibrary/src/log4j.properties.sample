@@ -1,0 +1,45 @@
+log4j.rootLogger=WARN, stdout
+
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=[%d{ISO8601}][%p][%30.30c][%t] - %m %n
+
+log4j.appender.XTMPLING=org.apache.log4j.RollingFileAppender
+# Change the file name (and/or location) so that each webapp will have its own log file
+log4j.appender.XTMPLING.File=vgn-ext-templating.log
+log4j.appender.XTMPLING.MaxFileSize=1000KB
+log4j.appender.XTMPLING.MaxBackupIndex=10
+log4j.appender.XTMPLING.layout=org.apache.log4j.PatternLayout
+log4j.appender.XTMPLING.layout.ConversionPattern=[%d{ISO8601}][%p][%30.30c][%t] - %m%n
+
+log4j.logger.com.vignette.ext.templating=DEBUG, XTMPLING
+log4j.additivity.com.vignette.ext.templating=false
+
+log4j.appender.PGTRACELOG=org.apache.log4j.RollingFileAppender
+log4j.appender.PGTRACELOG.File=pagetrace.log
+log4j.appender.PGTRACELOG.MaxFileSize=1000KB
+log4j.appender.PGTRACELOG.MaxBackupIndex=10
+log4j.appender.PGTRACELOG.layout=org.apache.log4j.PatternLayout
+log4j.appender.PGTRACELOG.layout.ConversionPattern=[%d{ISO8601}][%t] - %m%n
+
+log4j.logger.com.vignette.ext.templating.PGTRACE=DEBUG, PGTRACELOG
+log4j.additivity.com.vignette.ext.templating.PGTRACE=false
+
+
+log4j.appender.INVTRACELOG=org.apache.log4j.RollingFileAppender
+log4j.appender.INVTRACELOG.File=invtrace.log
+log4j.appender.INVTRACELOG.MaxFileSize=1000KB
+log4j.appender.INVTRACELOG.MaxBackupIndex=10
+log4j.appender.INVTRACELOG.layout=org.apache.log4j.PatternLayout
+log4j.appender.INVTRACELOG.layout.ConversionPattern=[%d{ISO8601}][%t] - %m%n
+
+log4j.logger.com.vignette.ext.templating.INVTRACE=DEBUG, INVTRACELOG
+log4j.additivity.com.vignette.ext.templating.INVTRACE=false
+
+
+log4j.logger.org.apache.axis=INFO
+log4j.logger.org.apache.axis.encoding=INFO
+log4j.logger.org.apache.axis.utils=INFO
+log4j.logger.org.apache.axis.message=INFO
+
+
