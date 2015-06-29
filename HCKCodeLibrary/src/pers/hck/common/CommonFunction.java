@@ -143,18 +143,18 @@ public class CommonFunction {
 	}
 
 	public static String insertHTMLTag(String TAG, String text) {
-		return TAG + CommonData.Sign_CloseTag + text + getHTMLCloseTag(TAG);
+		return TAG + CommonData.SIGN_CLOSETAG + text + getHTMLCloseTag(TAG);
 	}
 
 	public static String insertHTMLTag(String tag, String text,
 			String attribute) {
-		return tag + attribute + CommonData.Sign_CloseTag + text
+		return tag + attribute + CommonData.SIGN_CLOSETAG + text
 				+ getHTMLCloseTag(tag);
 	}
 
 	public static String getHTMLCloseTag(String TAG) {
 		String tag = TAG.substring(1);
-		return CommonData.TagClose + tag + CommonData.Sign_CloseTag;
+		return CommonData.TAG_CLOSE + tag + CommonData.SIGN_CLOSETAG;
 	}
 
 	public static ArrayList<Integer> getAllIndexOf(String target, String keyword) {

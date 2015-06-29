@@ -25,26 +25,26 @@ public class CommonData {
 	public final static String[][] SIGN_LANGUAGELIST = { SIGN_LANGUAGE_ENGLISH,
 		SIGN_LANGUAGE_CHINESE };
 
-	public final static String TagDoctype = "<!DOCTYPE";
-	public final static String TagHtml = "<HTML";
-	public final static String TagHead = "<HEAD";
-	public final static String TagBody = "<BODY";
-	public final static String TagTable = "<TABLE";
-	public final static String TagTr = "<TR";
-	public final static String TagTd = "<TD";
-	public final static String TagB = "<B";
-	public final static String TagP = "<P";
-	public final static String TagA = "<A";
-	public final static String TagH1 = "<H1";
-	public final static String TagH2 = "<H2";
-	public final static String TagBr = "<BR";
-	public final static String TagSup = "<sup";
-	public final static String TagSpan = "<span";
-	public final static String TagUl = "<ul";
-	public final static String TagLi = "<li";
-	public final static String TagClose = "</";
+	public final static String TAG_DOCTYPE = "<!DOCTYPE";
+	public final static String TAG_HTML = "<HTML";
+	public final static String TAG_HEAD = "<HEAD";
+	public final static String TAG_BODY = "<BODY";
+	public final static String TAG_TABLE = "<TABLE";
+	public final static String TAG_TR = "<TR";
+	public final static String TAG_TD = "<TD";
+	public final static String TAG_B = "<B";
+	public final static String TAG_P = "<P";
+	public final static String TAG_A = "<A";
+	public final static String TAG_H1 = "<H1";
+	public final static String TAG_H2 = "<H2";
+	public final static String TAG_BR = "<BR";
+	public final static String TAG_SUP = "<sup";
+	public final static String TAG_SPAN = "<span";
+	public final static String TAG_UL = "<ul";
+	public final static String TAG_LI = "<li";
+	public final static String TAG_CLOSE = "</";
 	
-	public final static String SingleTagBr = "<BR>";
+	public final static String TAG_SINGLEBR = "<BR>";
 	
-	public final static String Sign_CloseTag = ">";
+	public final static String SIGN_CLOSETAG = ">";
 }

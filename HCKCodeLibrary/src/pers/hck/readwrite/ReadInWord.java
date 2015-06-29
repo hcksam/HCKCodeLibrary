@@ -413,8 +413,8 @@ public class ReadInWord {
 		System.out.println();
 
 		Table table = riw.getTable(4);
-		System.out.println(CommonData.TagTable
-				+ CommonData.Sign_CloseTag);
+		System.out.println(CommonData.TAG_TABLE
+				+ CommonData.SIGN_CLOSETAG);
 		int maxCol = 0;
 		int maxRow = table.numRows();
 		boolean spanCol = false;
@@ -422,20 +422,20 @@ public class ReadInWord {
 		for (int i=0;i<table.numRows();i++){
 			TableRow row = table.getRow(i);
 			System.out.println(row.cantSplit());
-			System.out.println(CommonData.TagTr
-					+ CommonData.Sign_CloseTag);
+			System.out.println(CommonData.TAG_TR
+					+ CommonData.SIGN_CLOSETAG);
 			for (int j=0;j<row.numCells();j++){
 				TableCell column = row.getCell(j);
-				String text = ReadInWord.removeSigns(column.text()).replaceAll(ReadInWord.SIGN_BR.toString(), CommonData.SingleTagBr);
+				String text = ReadInWord.removeSigns(column.text()).replaceAll(ReadInWord.SIGN_BR.toString(), CommonData.TAG_SINGLEBR);
 				if (text.equals("")){
-					System.out.println(CommonFunction.insertHTMLTag(CommonData.TagTd, text, " colspan=2"));
+					System.out.println(CommonFunction.insertHTMLTag(CommonData.TAG_TD, text, " colspan=2"));
 				}else{
-					System.out.println(CommonFunction.insertHTMLTag(CommonData.TagTd, text));
+					System.out.println(CommonFunction.insertHTMLTag(CommonData.TAG_TD, text));
 				}
 			}
-			System.out.println(CommonFunction.getHTMLCloseTag(CommonData.TagTr));
+			System.out.println(CommonFunction.getHTMLCloseTag(CommonData.TAG_TR));
 		}
-		System.out.println(CommonFunction.getHTMLCloseTag(CommonData.TagTable));
+		System.out.println(CommonFunction.getHTMLCloseTag(CommonData.TAG_TABLE));
 	}
 	
 	private static void Test1(){
