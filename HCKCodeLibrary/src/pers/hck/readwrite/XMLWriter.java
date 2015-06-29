@@ -11,17 +11,17 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class OutWriteXML {
+public class XMLWriter {
 	public Document document;
 	public File file;
 
-	public OutWriteXML(File outFile, Document document) {
+	public XMLWriter(File outFile, Document document) {
 		this.document = document;
 		this.file = outFile;
 	}
 
-	public OutWriteXML(File inFile, File outFile) {
-		document = new ReadInXML(inFile).getDocument();
+	public XMLWriter(File inFile, File outFile) {
+		document = new XMLReader(inFile).getDocument();
 		this.file = outFile;
 	}
 
@@ -66,7 +66,7 @@ public class OutWriteXML {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		ReadInXML rixml = new ReadInXML(new File(
+		XMLReader rixml = new XMLReader(new File(
 				"C:/Temp/20130607/Counter_Locations.xml"));
 		Document document = rixml.getDocument();
 		NodeList shops = document.getElementsByTagName("counter_location");

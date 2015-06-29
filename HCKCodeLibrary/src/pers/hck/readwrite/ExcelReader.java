@@ -10,16 +10,16 @@ import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 
-public class ReadInExcel {
+public class ExcelReader {
 	public final static int INDEX_READTYPE_NORMAL = 0;
 	public final static int INDEX_READTYPE_NOTNULL = 1;
 	private File file;
 
-	public ReadInExcel() {
+	public ExcelReader() {
 		file = CommonData.DEFAULT_FILE;
 	}
 
-	public ReadInExcel(File file) {
+	public ExcelReader(File file) {
 		this.file = file;
 	}
 
@@ -110,8 +110,8 @@ public class ReadInExcel {
 	}
 
 	public static void main(String[] args) {
-		ReadInExcel rix = new ReadInExcel(new File("C:/temp",
+		ExcelReader rix = new ExcelReader(new File("C:/temp",
 				"Copy of QR code list_95 contact_fax_131011.xls"));
-		rix.showDatas(0, ReadInExcel.INDEX_READTYPE_NOTNULL);
+		rix.showDatas(0, ExcelReader.INDEX_READTYPE_NOTNULL);
 	}
 }

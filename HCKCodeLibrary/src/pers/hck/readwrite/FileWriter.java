@@ -8,16 +8,16 @@ import java.util.ArrayList;
 
 import pers.hck.common.CommonData;
 
-public class OutWriteFile {
+public class FileWriter {
 	private File file;
 	private String encode;
 
-	public OutWriteFile() {
+	public FileWriter() {
 		this.file = CommonData.DEFAULT_FILE;
 		this.encode = CommonData.DEFAULT_ENCODE_CHINESE;
 	}
 
-	public OutWriteFile(File file, String encode) {
+	public FileWriter(File file, String encode) {
 		this.file = file;
 		this.encode = encode;
 	}

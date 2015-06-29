@@ -21,7 +21,7 @@ import pers.hck.common.CommonData;
 import pers.hck.common.CommonFunction;
 import pers.hck.utils.ReadWordUtils;
 
-public class ReadInWord {
+public class WordReader {
 	public final static String[] FILTER_DATA = { "-  PAGE ", "-  PAGE ",
 			"\r", "\n" };
 	public final static String[][] FILTER_HUPERLINK = {
@@ -41,7 +41,7 @@ public class ReadInWord {
 	private ArrayList<String> paragraphs = new ArrayList<String>();
 	private Hashtable<Integer, Integer> paragraphIndexMap = new Hashtable<Integer, Integer>();
 
-	public ReadInWord() {
+	public WordReader() {
 		file = CommonData.DEFAULT_FILE;
 		document = getData();
 		range = document.getRange();
@@ -49,7 +49,7 @@ public class ReadInWord {
 		setVeriable();
 	}
 
-	public ReadInWord(File file, int INDEX_PARAGRAPHTYPE) {
+	public WordReader(File file, int INDEX_PARAGRAPHTYPE) {
 		this.file = file;
 		document = getData();
 		range = document.getRange();
@@ -384,8 +384,8 @@ public class ReadInWord {
 
 	public static void main(String[] args) throws FileNotFoundException,
 			IOException {
-		int PARAGRAPHTYPE = ReadInWord.INDEX_PARAGRAPHTYPE_NOBLANKROW;
-		ReadInWord riw = new ReadInWord(new File(CommonData.DEFAULT_PATH+"/press BUG/VT",
+		int PARAGRAPHTYPE = WordReader.INDEX_PARAGRAPHTYPE_NOBLANKROW;
+		WordReader riw = new WordReader(new File(CommonData.DEFAULT_PATH+"/press BUG/VT",
 				"20131106c Free SIM.doc"), PARAGRAPHTYPE);
 		
 		riw.showParagraphs();
@@ -396,8 +396,8 @@ public class ReadInWord {
 	}
 	
 	private static void TestTableSpan(){
-		int PARAGRAPHTYPE = ReadInWord.INDEX_PARAGRAPHTYPE_NOBLANKROW;
-		ReadInWord riw = new ReadInWord(new File(CommonData.DEFAULT_PATH,
+		int PARAGRAPHTYPE = WordReader.INDEX_PARAGRAPHTYPE_NOBLANKROW;
+		WordReader riw = new WordReader(new File(CommonData.DEFAULT_PATH,
 				"20130621c Discover HK SIM.doc"), PARAGRAPHTYPE);
 		ArrayList<String> s = riw.getParagraphs();
 		for (int i = 0; i < s.size(); i++) {
@@ -426,7 +426,7 @@ public class ReadInWord {
 					+ CommonData.SIGN_CLOSETAG);
 			for (int j=0;j<row.numCells();j++){
 				TableCell column = row.getCell(j);
-				String text = ReadInWord.removeSigns(column.text()).replaceAll(ReadInWord.SIGN_BR.toString(), CommonData.TAG_SINGLEBR);
+				String text = WordReader.removeSigns(column.text()).replaceAll(WordReader.SIGN_BR.toString(), CommonData.TAG_SINGLEBR);
 				if (text.equals("")){
 					System.out.println(CommonFunction.insertHTMLTag(CommonData.TAG_TD, text, " colspan=2"));
 				}else{
@@ -439,8 +439,8 @@ public class ReadInWord {
 	}
 	
 	private static void Test1(){
-		int PARAGRAPHTYPE = ReadInWord.INDEX_PARAGRAPHTYPE_NOBLANKROW;
-		ReadInWord riw = new ReadInWord(new File(CommonData.DEFAULT_PATH,
+		int PARAGRAPHTYPE = WordReader.INDEX_PARAGRAPHTYPE_NOBLANKROW;
+		WordReader riw = new WordReader(new File(CommonData.DEFAULT_PATH,
 				"20130621c Discover HK SIM.doc"), PARAGRAPHTYPE);
 		// int PARAGRAPHTYPE = ReadInWord.INDEX_PARAGRAPHTYPE_Normal;
 		

@@ -10,11 +10,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class ReadInXML {
+public class XMLReader {
 	public Document document;
 	public File file;
 
-	public ReadInXML(File file) {
+	public XMLReader(File file) {
 		try {
 			this.file = file;
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -156,15 +156,15 @@ public class ReadInXML {
 	}
 
 	public static void main(String[] args) {
-		ReadInXML rixml = new ReadInXML(new File(
+		XMLReader rixml = new XMLReader(new File(
 				"C:/Temp/20130601/shop_location.xml"));
 		System.out.println(rixml.getRootElementName());
 		
-		ArrayList<Node> shops = ReadInXML.getNodes(rixml.getRootNodeList());
+		ArrayList<Node> shops = XMLReader.getNodes(rixml.getRootNodeList());
 		for (int i = 0; i < shops.size(); i++) {
 			Node shop = shops.get(i);
 			System.out.println(shop.getNodeName());
-			ArrayList<Node> shopInfos = ReadInXML.getNodes(shop
+			ArrayList<Node> shopInfos = XMLReader.getNodes(shop
 					.getChildNodes());
 			for (int j = 0; j < shopInfos.size(); j++) {
 				Node shopInfo = shopInfos.get(j);
@@ -173,17 +173,17 @@ public class ReadInXML {
 
 				if (shopInfo.getChildNodes().getLength() == 1) {
 					name += ": ";
-					value = ReadInXML.getSingleNodeValue(shopInfo);
+					value = XMLReader.getSingleNodeValue(shopInfo);
 					System.out.println(name + value);
 				} else {
 					System.out.println(name + ": "
-							+ ReadInXML.getSingleAttributeValue(shopInfo));
-					ArrayList<Node> shopDetails = ReadInXML.getNodes(shopInfo
+							+ XMLReader.getSingleAttributeValue(shopInfo));
+					ArrayList<Node> shopDetails = XMLReader.getNodes(shopInfo
 							.getChildNodes());
 					for (int k = 0; k < shopDetails.size(); k++) {
 						Node shopDetail = shopDetails.get(k);
 						name = shopDetail.getNodeName() + ": ";
-						value = ReadInXML.getSingleNodeValue(shopDetail);
+						value = XMLReader.getSingleNodeValue(shopDetail);
 						System.out.println(name + value);
 					}
 				}

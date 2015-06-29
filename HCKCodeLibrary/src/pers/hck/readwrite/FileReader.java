@@ -9,16 +9,16 @@ import java.util.ArrayList;
 
 import pers.hck.common.CommonData;
 
-public class ReadInFile {
+public class FileReader {
 	private File file;
 	private String encode;
 	
-	public ReadInFile(){
+	public FileReader(){
 		this.file = CommonData.DEFAULT_FILE;
 		this.encode = CommonData.DEFAULT_ENCODE_CHINESE;
 	}
 	
-	public ReadInFile(File file, String encode){
+	public FileReader(File file, String encode){
 		this.file = file;
 		this.encode = encode;
 	}

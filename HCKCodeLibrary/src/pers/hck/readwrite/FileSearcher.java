@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 
-public class SearchFile {
+public class FileSearcher {
 	private String rootPath;
 
-	public SearchFile(String rootPath) {
+	public FileSearcher(String rootPath) {
 		this.rootPath = rootPath;
 	}
 

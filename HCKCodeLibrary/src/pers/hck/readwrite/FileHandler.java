@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 
-public class HandleFile {
+public class FileHandler {
 	public static boolean copyFile(File inFile, File outFile) {
 		try {
 			outFile.getParentFile().mkdirs();
