@@ -44,7 +44,7 @@ public class ExcelReader {
 						}
 					}
 				}
-				if (haveData) {
+				if ((INDEX_READTYPE == 1 && haveData) || INDEX_READTYPE == 0) {
 					outDatas.add(data);
 				}
 			}
