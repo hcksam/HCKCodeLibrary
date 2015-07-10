@@ -36,6 +36,10 @@ public class CommonFunction {
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		return sdf.format(inDate);
 	}
+	
+	public static Date getDate(String inDate) {
+			return getDate(inDate, CommonData.DEFAULT_DATE_FORMAT);
+	}
 
 	public static Date getDate(String inDate, String dateFormat) {
 		try {
