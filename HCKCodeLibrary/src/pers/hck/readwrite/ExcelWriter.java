@@ -20,12 +20,14 @@ public class ExcelWriter {
 		this.file = file;
 	}
 	
-	public boolean writeToCSV(ArrayList<ArrayList<String>> datas) {
+	public boolean writeToExcel(ArrayList<ArrayList<String>> datas) {
+		return writeToExcel(datas,0);
+	}
+	
+	public boolean writeToExcel(ArrayList<ArrayList<String>> datas, int page) {
 		try {
-			String name = file.getName().replaceAll(".xls", ".csv").replaceAll(".xlsx", ".csv");
-			File csvFile = new File(file.getParent(),name);
-			WritableWorkbook workbook = Workbook.createWorkbook(csvFile);
-			workbook.createSheet("Report", 0);
+			WritableWorkbook workbook = Workbook.createWorkbook(file);
+			workbook.createSheet("Report", page);
 			WritableSheet sheet = workbook.getSheet(0);
 			
 			for (int i=0;i<datas.size();i++){
