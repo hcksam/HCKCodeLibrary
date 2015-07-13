@@ -36,19 +36,33 @@ public class CommonFunction {
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		return sdf.format(inDate);
 	}
-	
+
 	public static Date getDate(String inDate) {
-			return getDate(inDate, CommonData.DEFAULT_DATE_FORMAT);
+		return getDate(inDate, CommonData.DEFAULT_DATE_FORMAT);
 	}
 
 	public static Date getDate(String inDate, String dateFormat) {
+		return getDate(inDate, dateFormat, true);
+	}
+
+	public static Date getDate(String inDate, String dateFormat,
+			boolean nullable) {
 		try {
+			if (inDate.equals("")) {
+				inDate = null;
+			}
 			SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 			return sdf.parse(inDate);
+		} catch (NullPointerException npe) {
+			if (!nullable) {
+				System.out.println("InDate: " + inDate);
+			}
+			return null;
 		} catch (Exception e) {
 			System.out.println("InDate: " + inDate);
 			System.out.println("DateFormat: " + dateFormat);
 			System.out.println(Warning_DateFormat);
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -150,8 +164,7 @@ public class CommonFunction {
 		return TAG + CommonData.SIGN_CLOSETAG + text + getHTMLCloseTag(TAG);
 	}
 
-	public static String insertHTMLTag(String tag, String text,
-			String attribute) {
+	public static String insertHTMLTag(String tag, String text, String attribute) {
 		return tag + attribute + CommonData.SIGN_CLOSETAG + text
 				+ getHTMLCloseTag(tag);
 	}
@@ -428,6 +441,60 @@ public class CommonFunction {
 		if (es.length() > 0)
 			outString.add(es);
 		return outString;
+	}
+
+	public static ArrayList<String> replaceNullStringToNothing(
+			ArrayList<String> datas) {
+		for (int i = 0; i < datas.size(); i++) {
+			String data = datas.get(i);
+			if (data == null) {
+				datas.set(i, "");
+			} else {
+				if (data.equalsIgnoreCase("null")) {
+					datas.set(i, "");
+				}
+			}
+		}
+		return datas;
+	}
+
+	public static ArrayList<String> replaceNullStringToNull(
+			ArrayList<String> datas) {
+		for (int i = 0; i < datas.size(); i++) {
+			String data = datas.get(i);
+			if (data != null) {
+				if (data.equalsIgnoreCase("null")) {
+					datas.set(i, null);
+				}
+			}
+		}
+		return datas;
+	}
+
+	public static int convertObjectToInt(Object object) {
+		return convertObjectToInt(object, true);
+	}
+
+	public static int convertObjectToInt(String string, boolean nullable) {
+		try {
+			return Integer.parseInt(string);
+		} catch (Exception e) {
+			if (!nullable) {
+				e.printStackTrace();
+			}
+			return 0;
+		}
+	}
+
+	public static int convertObjectToInt(Object object, boolean nullable) {
+		try {
+			return Integer.parseInt(String.valueOf(object));
+		} catch (Exception e) {
+			if (!nullable) {
+				e.printStackTrace();
+			}
+			return 0;
+		}
 	}
 
 	private static boolean isSlantingSign(char inChar) {
