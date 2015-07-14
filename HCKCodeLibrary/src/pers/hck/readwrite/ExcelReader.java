@@ -39,7 +39,7 @@ public class ExcelReader {
 						data.add(s);
 						haveData = true;
 					} else {
-						if (!isColumnAllNull(rs.getColumn(j))) {
+						if (INDEX_READTYPE == 1 && !isColumnAllNull(rs.getColumn(j)) || INDEX_READTYPE == 0) {
 							data.add(null);
 						}
 					}
@@ -54,7 +54,7 @@ public class ExcelReader {
 			e.printStackTrace();
 			return null;
 		}
-		return (outDatas.size() > 0) ? removeNullColumn(outDatas) : outDatas;
+		return (INDEX_READTYPE == 1) ? removeNullColumn(outDatas) : outDatas;
 	}
 
 	private ArrayList<ArrayList<String>> removeNullColumn(
