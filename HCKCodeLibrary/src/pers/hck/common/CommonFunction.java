@@ -472,21 +472,11 @@ public class CommonFunction {
 	}
 
 	public static int convertObjectToInt(Object object) {
-		return convertObjectToInt(object, true);
+		Integer n = convertObjectToInteger(object, true);
+		return (n == null)? 0 : n;
 	}
 
-	public static int convertObjectToInt(String string, boolean nullable) {
-		try {
-			return Integer.parseInt(string);
-		} catch (Exception e) {
-			if (!nullable) {
-				e.printStackTrace();
-			}
-			return 0;
-		}
-	}
-
-	public static int convertObjectToInt(Object object, boolean nullable) {
+	public static Integer convertObjectToInteger(Object object, boolean nullable) {
 		try {
 			return Integer.parseInt(String.valueOf(object));
 		} catch (Exception e) {
