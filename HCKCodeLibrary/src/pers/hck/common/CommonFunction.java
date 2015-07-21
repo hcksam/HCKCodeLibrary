@@ -472,8 +472,12 @@ public class CommonFunction {
 	}
 
 	public static int convertObjectToInt(Object object) {
-		Integer n = convertObjectToInteger(object, true);
+		Integer n = convertObjectToInteger(object, false);
 		return (n == null)? 0 : n;
+	}
+	
+	public static Integer convertObjectToInteger(String object) {
+		return convertObjectToInteger(object, true);
 	}
 
 	public static Integer convertObjectToInteger(Object object, boolean nullable) {
@@ -481,9 +485,10 @@ public class CommonFunction {
 			return Integer.parseInt(String.valueOf(object));
 		} catch (Exception e) {
 			if (!nullable) {
+				System.out.println("Convert Object to Integer Fail!");
 				e.printStackTrace();
 			}
-			return 0;
+			return null;
 		}
 	}
 
