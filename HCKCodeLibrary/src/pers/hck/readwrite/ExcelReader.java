@@ -29,6 +29,8 @@ public class ExcelReader {
 			InputStream is = new FileInputStream(file);
 			Workbook rwb = Workbook.getWorkbook(is);
 			Sheet rs = rwb.getSheet(page);
+//			System.out.println("Row: "+rs.getRows());
+//			System.out.println("Column: "+rs.getColumns());
 			for (int i = 0; i < rs.getRows(); i++) {
 				ArrayList<String> data = new ArrayList<String>();
 				boolean haveData = false;
