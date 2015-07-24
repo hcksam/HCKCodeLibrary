@@ -33,7 +33,7 @@ public class ExcelWriter {
 			for (int i=0;i<datas.size();i++){
 				ArrayList<String> row = datas.get(i);
 				for (int j=0;j<row.size();j++){
-					String column = row.get(j);
+					String column = String.valueOf(row.get(j));
 					Label cell = new Label(j,i,column);
 					sheet.addCell(cell);
 				}
