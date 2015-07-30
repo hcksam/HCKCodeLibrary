@@ -495,6 +495,26 @@ public class CommonFunction {
 	private static boolean isSlantingSign(char inChar) {
 		return (inChar == US2.charAt(0) || inChar == US3.charAt(0));
 	}
+	
+	public static String toUpperCaseFirst(String string){
+		String fs = string.substring(0,1);
+		if (string.length() > 1){
+			String ls = string.substring(1);
+			return fs.toUpperCase()+ls;
+		}else{
+			return fs.toUpperCase();
+		}
+	}
+	
+	public static String toLowerCaseFirst(String string){
+		String fs = string.substring(0,1);
+		if (string.length() > 1){
+			String ls = string.substring(1);
+			return fs.toLowerCase()+ls;
+		}else{
+			return fs.toLowerCase();
+		}
+	}
 
 	public static void main(String args[]) {
 		System.out.println(getLastDateFile("C:/temp",

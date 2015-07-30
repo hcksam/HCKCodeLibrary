@@ -2,8 +2,8 @@ package pers.hck.common.utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ClassHandler {
 	public static ArrayList<String> getBeanGetMethodNames(String beanPath) {
@@ -42,7 +42,7 @@ public class ClassHandler {
 		}
 	}
 
-	public static ArrayList<String> getBeanValueNames(Class bean) {
+	public static ArrayList<String> getBeanValueNames2(Class bean) {
 		ArrayList<String> methodNames = getBeanGetMethodNames(bean);
 		ArrayList<String> valueNames = new ArrayList<String>();
 		try {
@@ -56,7 +56,7 @@ public class ClassHandler {
 		}
 	}
 
-	public static ArrayList<String> getBeanValueNames2(Class bean) {
+	public static ArrayList<String> getBeanValueNames(Class bean) {
 		ArrayList<String> valueNames = new ArrayList<String>();
 		try {
 			Field[] fields = bean.getDeclaredFields();
@@ -72,11 +72,46 @@ public class ClassHandler {
 	}
 
 	public static ArrayList<String> getBaseBeanValueNames(Class bean) {
-		ArrayList<String> methodNames = getBaseBeanValueNames(bean);
 		ArrayList<String> valueNames = new ArrayList<String>();
+		ArrayList<String> baseType = new ArrayList<String>();
+		baseType.add("class java.lang.Integer");
+		baseType.add("class java.lang.String");
+		baseType.add("class java.util.Date");
+		
 		try {
-			for (int i = 0; i < methodNames.size(); i++) {
-				valueNames.add(methodNames.get(i).substring(3));
+			Field[] fields = bean.getDeclaredFields();
+			for (Field field : fields) {
+				String value = field.getName();
+				String valueType = field.getGenericType().toString();
+				if (baseType.contains(valueType)){
+					valueNames.add(value);
+				}
+			}
+			return valueNames;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static ArrayList<String> getInsideBeanNames(Class bean, String beanPath) {
+		return getInsideBeanNames(bean, new String[]{beanPath});
+	}
+	
+	public static ArrayList<String> getInsideBeanNames(Class bean, String[] beanPaths) {
+		ArrayList<String> valueNames = new ArrayList<String>();
+		
+		try {
+			Field[] fields = bean.getDeclaredFields();
+			for (Field field : fields) {
+				String value = field.getName();
+				String valueType = field.getGenericType().toString();
+				for (String beanPath : beanPaths){
+					if (valueType.contains("class "+beanPath)){
+						valueNames.add(value);
+						break;
+					}
+				}
 			}
 			return valueNames;
 		} catch (Exception e) {
