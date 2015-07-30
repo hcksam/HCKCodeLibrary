@@ -94,11 +94,20 @@ public class ClassHandler {
 		}
 	}
 	
-	public static ArrayList<String> getInsideBeanNames(Class bean, String beanPath) {
-		return getInsideBeanNames(bean, new String[]{beanPath});
+	public static ArrayList<String> getInsideBeanNames(String beanPath, String beanType) {
+		try {
+			return getInsideBeanNames(Class.forName(beanPath), beanType);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
-	public static ArrayList<String> getInsideBeanNames(Class bean, String[] beanPaths) {
+	public static ArrayList<String> getInsideBeanNames(Class bean, String beanType) {
+		return getInsideBeanNames(bean, new String[]{beanType});
+	}
+	
+	public static ArrayList<String> getInsideBeanNames(Class bean, String[] beanTypes) {
 		ArrayList<String> valueNames = new ArrayList<String>();
 		
 		try {
@@ -106,8 +115,8 @@ public class ClassHandler {
 			for (Field field : fields) {
 				String value = field.getName();
 				String valueType = field.getGenericType().toString();
-				for (String beanPath : beanPaths){
-					if (valueType.contains("class "+beanPath)){
+				for (String beanType : beanTypes){
+					if (valueType.contains("class "+beanType)){
 						valueNames.add(value);
 						break;
 					}
