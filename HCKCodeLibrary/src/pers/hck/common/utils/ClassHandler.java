@@ -1,53 +1,85 @@
 package pers.hck.common.utils;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 
 public class ClassHandler {
-	public static ArrayList<String> getBeanGetMethodNames(String beanName){
-		try{
-			return getBeanGetMethodNames(Class.forName(beanName));
-		}catch (Exception e){
+	public static ArrayList<String> getBeanGetMethodNames(String beanPath) {
+		try {
+			return getBeanGetMethodNames(Class.forName(beanPath));
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	public static ArrayList<String> getBeanGetMethodNames(Class bean){
+
+	public static ArrayList<String> getBeanGetMethodNames(Class bean) {
 		ArrayList<String> methodNames = new ArrayList<String>();
-		try{
+		try {
 			Method[] methods = bean.getMethods();
-			for (int i=0;i<methods.length;i++){
-				String method = methods[i].getName();
-				if (method.substring(0,3).equalsIgnoreCase("get") && !method.equalsIgnoreCase("getClass")){
-					methodNames.add(method);
+			for (Method method : methods) {
+				String methodName = method.getName();
+				if (methodName.substring(0, 3).equalsIgnoreCase("get")
+						&& !methodName.equalsIgnoreCase("getClass")) {
+					methodNames.add(methodName);
 				}
 			}
 			return methodNames;
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	public static ArrayList<String> getBeanValueNames(String beanName){
-		try{
-			return getBeanValueNames(Class.forName(beanName));
-		}catch (Exception e){
+
+	public static ArrayList<String> getBeanValueNames(String beanPath) {
+		try {
+			return getBeanValueNames(Class.forName(beanPath));
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	public static ArrayList<String> getBeanValueNames(Class bean){
+
+	public static ArrayList<String> getBeanValueNames(Class bean) {
 		ArrayList<String> methodNames = getBeanGetMethodNames(bean);
 		ArrayList<String> valueNames = new ArrayList<String>();
-		try{
-			for (int i=0;i<methodNames.size();i++){
+		try {
+			for (int i = 0; i < methodNames.size(); i++) {
 				valueNames.add(methodNames.get(i).substring(3));
 			}
 			return valueNames;
-		}catch (Exception e){
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static ArrayList<String> getBeanValueNames2(Class bean) {
+		ArrayList<String> valueNames = new ArrayList<String>();
+		try {
+			Field[] fields = bean.getDeclaredFields();
+			for (Field field : fields) {
+				String value = field.getName();
+				valueNames.add(value);
+			}
+			return valueNames;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static ArrayList<String> getBaseBeanValueNames(Class bean) {
+		ArrayList<String> methodNames = getBaseBeanValueNames(bean);
+		ArrayList<String> valueNames = new ArrayList<String>();
+		try {
+			for (int i = 0; i < methodNames.size(); i++) {
+				valueNames.add(methodNames.get(i).substring(3));
+			}
+			return valueNames;
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
