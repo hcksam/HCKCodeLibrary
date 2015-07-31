@@ -42,20 +42,6 @@ public class ClassHandler {
 		}
 	}
 
-	public static ArrayList<String> getBeanValueNames2(Class bean) {
-		ArrayList<String> methodNames = getBeanGetMethodNames(bean);
-		ArrayList<String> valueNames = new ArrayList<String>();
-		try {
-			for (int i = 0; i < methodNames.size(); i++) {
-				valueNames.add(methodNames.get(i).substring(3));
-			}
-			return valueNames;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
 	public static ArrayList<String> getBeanValueNames(Class bean) {
 		ArrayList<String> valueNames = new ArrayList<String>();
 		try {
