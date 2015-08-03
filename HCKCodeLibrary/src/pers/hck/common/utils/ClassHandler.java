@@ -80,6 +80,15 @@ public class ClassHandler {
 		}
 	}
 	
+	public static ArrayList<String> getBaseBeanValueNames(String beanPath) {
+		try {
+			return getBaseBeanValueNames(Class.forName(beanPath));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public static ArrayList<String> getInsideBeanNames(String beanPath, String beanType) {
 		try {
 			return getInsideBeanNames(Class.forName(beanPath), beanType);
