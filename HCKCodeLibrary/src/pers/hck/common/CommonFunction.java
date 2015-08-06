@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class CommonFunction {
 	private final static String MS = "@";
@@ -494,6 +495,20 @@ public class CommonFunction {
 
 	private static boolean isSlantingSign(char inChar) {
 		return (inChar == US2.charAt(0) || inChar == US3.charAt(0));
+	}
+	
+	public static List<String> toUpperCase(List<String> array){
+		for (int i=0;i<array.size();i++){
+			array.set(i, array.get(i).toUpperCase());
+		}
+		return array;
+	}
+	
+	public static List<String> toLowerCase(List<String> array){
+		for (int i=0;i<array.size();i++){
+			array.set(i, array.get(i).toLowerCase());
+		}
+		return array;
 	}
 	
 	public static String toUpperCaseFirst(String string){
