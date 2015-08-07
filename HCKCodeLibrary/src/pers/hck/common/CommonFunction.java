@@ -477,7 +477,7 @@ public class CommonFunction {
 		return (n == null)? 0 : n;
 	}
 	
-	public static Integer convertObjectToInteger(String object) {
+	public static Integer convertObjectToInteger(Object object) {
 		return convertObjectToInteger(object, true);
 	}
 
