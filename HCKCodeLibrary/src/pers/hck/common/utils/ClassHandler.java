@@ -259,6 +259,33 @@ public class ClassHandler {
 			return null;
 		}
 	}
+	
+	public static String getBeanValueTypeByValueName(Class bean, String beanValueName){
+		try {
+			Field[] fields = bean.getDeclaredFields();
+			for (Field field : fields) {
+				String value = field.getName();
+				String valueType = field.getGenericType().toString();
+				if (beanValueName.equals(value)){
+					valueType = valueType.substring(valueType.lastIndexOf('.'));
+					return valueType;
+				}
+			}
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static String getBeanValueTypeByValueName(String beanPath, String beanValueName){
+		try {
+			return getBeanValueTypeByValueName(Class.forName(beanPath), beanValueName);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
