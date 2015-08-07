@@ -6,6 +6,95 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ClassHandler {
+	public final static int TYPE_ALL = 0;
+	public final static int TYPE_BASE = 1;
+	public final static int TYPE_INSIDE = 2;
+
+	public static ArrayList<String> getBeanGetMethodNames(Class bean, int TYPE, String beanType) {
+		ArrayList<String> methodNames = new ArrayList<String>();
+		try {
+			Method[] methods = bean.getMethods();
+			for (Method method : methods) {
+				String methodName = method.getName();
+				if (methodName.substring(0, 3).equalsIgnoreCase("get")
+						&& !methodName.equalsIgnoreCase("getClass")) {
+					ArrayList<String> beanValueNames = null;
+					switch (TYPE){
+					case TYPE_ALL:
+						methodNames.add(methodName);
+						break;
+					case TYPE_BASE:
+						beanValueNames = getBaseBeanValueNames(bean);
+						for (String beanValueName:beanValueNames){
+							if (methodName.toLowerCase().contains(beanValueName.toLowerCase())){
+								methodNames.add(methodName);
+								break;
+							}
+						}
+						break;
+					case TYPE_INSIDE:
+						beanValueNames = getInsideBeanNames(bean, beanType);
+						for (String beanValueName:beanValueNames){
+							if (methodName.toLowerCase().contains(beanValueName.toLowerCase())){
+								methodNames.add(methodName);
+								break;
+							}
+						}
+						break;
+					}
+				}
+			}
+			return methodNames;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static ArrayList<String> getBeanSetMethodNames(Class bean, int TYPE, String beanType) {
+		ArrayList<String> methodNames = new ArrayList<String>();
+		try {
+			Method[] methods = bean.getMethods();
+			for (Method method : methods) {
+				String methodName = method.getName();
+				if (methodName.substring(0, 3).equalsIgnoreCase("set")){
+					ArrayList<String> beanValueNames = null;
+					switch (TYPE){
+					case TYPE_ALL:
+						methodNames.add(methodName);
+						break;
+					case TYPE_BASE:
+						beanValueNames = getBaseBeanValueNames(bean);
+						for (String beanValueName:beanValueNames){
+							if (methodName.toLowerCase().contains(beanValueName.toLowerCase())){
+								methodNames.add(methodName);
+								break;
+							}
+						}
+						break;
+					case TYPE_INSIDE:
+						beanValueNames = getInsideBeanNames(bean, beanType);
+						for (String beanValueName:beanValueNames){
+							if (methodName.toLowerCase().contains(beanValueName.toLowerCase())){
+								methodNames.add(methodName);
+								break;
+							}
+						}
+						break;
+					}
+				}
+			}
+			return methodNames;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static ArrayList<String> getBeanGetMethodNames(Class bean) {
+		return getBeanGetMethodNames(bean, TYPE_ALL, null);
+	}
+	
 	public static ArrayList<String> getBeanGetMethodNames(String beanPath) {
 		try {
 			return getBeanGetMethodNames(Class.forName(beanPath));
@@ -14,19 +103,66 @@ public class ClassHandler {
 			return null;
 		}
 	}
-
-	public static ArrayList<String> getBeanGetMethodNames(Class bean) {
-		ArrayList<String> methodNames = new ArrayList<String>();
+	
+	public static ArrayList<String> getBeanSetMethodNames(Class bean) {
+		return getBeanSetMethodNames(bean, TYPE_ALL, null);
+	}
+	
+	public static ArrayList<String> getBeanSetMethodNames(String beanPath) {
 		try {
-			Method[] methods = bean.getMethods();
-			for (Method method : methods) {
-				String methodName = method.getName();
-				if (methodName.substring(0, 3).equalsIgnoreCase("get")
-						&& !methodName.equalsIgnoreCase("getClass")) {
-					methodNames.add(methodName);
-				}
-			}
-			return methodNames;
+			return getBeanSetMethodNames(Class.forName(beanPath));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static ArrayList<String> getBaseBeanGetMethodNames(Class bean) {
+		return getBeanGetMethodNames(bean, TYPE_BASE, null);
+	}
+	
+	public static ArrayList<String> getBaseBeanGetMethodNames(String beanPath) {
+		try {
+			return getBaseBeanGetMethodNames(Class.forName(beanPath));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static ArrayList<String> getBaseBeanSetMethodNames(Class bean) {
+		return getBeanSetMethodNames(bean, TYPE_BASE, null);
+	}
+	
+	public static ArrayList<String> getBaseBeanSetMethodNames(String beanPath) {
+		try {
+			return getBaseBeanSetMethodNames(Class.forName(beanPath));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static ArrayList<String> getInsideBeanGetMethodNames(Class bean, String beanType) {
+		return getBeanGetMethodNames(bean, TYPE_INSIDE, beanType);
+	}
+	
+	public static ArrayList<String> getInsideBeanGetMethodNames(String beanPath, String beanType) {
+		try {
+			return getInsideBeanGetMethodNames(Class.forName(beanPath), beanType);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static ArrayList<String> getInsideBeanSetMethodNames(Class bean, String beanType) {
+		return getBeanSetMethodNames(bean, TYPE_INSIDE, beanType);
+	}
+	
+	public static ArrayList<String> getInsideBeanSetMethodNames(String beanPath, String beanType) {
+		try {
+			return getInsideBeanSetMethodNames(Class.forName(beanPath), beanType);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -126,7 +262,7 @@ public class ClassHandler {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }
