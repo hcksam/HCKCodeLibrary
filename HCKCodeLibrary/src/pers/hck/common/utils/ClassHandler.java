@@ -267,7 +267,7 @@ public class ClassHandler {
 				String value = field.getName();
 				String valueType = field.getGenericType().toString();
 				if (beanValueName.equals(value)){
-					valueType = valueType.substring(valueType.lastIndexOf('.'));
+					valueType = valueType.substring(valueType.lastIndexOf('.')+1);
 					return valueType;
 				}
 			}
