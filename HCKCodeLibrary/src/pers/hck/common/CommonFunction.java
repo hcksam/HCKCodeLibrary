@@ -26,24 +26,24 @@ public class CommonFunction {
 			return false;
 		}
 	}
+	
+	public static boolean isDate(String inString) {
+		return isDate(CommonData.DEFAULT_DATE_FORMAT);
+	}
 
 	public static String getStringToday(String dateFormat) {
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		Date today = new Date();
 		return sdf.format(today);
 	}
+	
+	public static String getStringToday() {
+		return getStringToday(CommonData.DEFAULT_DATE_FORMAT);
+	}
 
 	public static String getStringDate(Date inDate, String dateFormat) {
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		return sdf.format(inDate);
-	}
-
-	public static Date getDate(String inDate) {
-		return getDate(inDate, CommonData.DEFAULT_DATE_FORMAT);
-	}
-
-	public static Date getDate(String inDate, String dateFormat) {
-		return getDate(inDate, dateFormat, true);
 	}
 
 	public static Date getDate(String inDate, String dateFormat,
@@ -67,6 +67,14 @@ public class CommonFunction {
 			return null;
 		}
 	}
+	
+	public static Date getDate(String inDate) {
+		return getDate(inDate, CommonData.DEFAULT_DATE_FORMAT);
+	}
+
+	public static Date getDate(String inDate, String dateFormat) {
+		return getDate(inDate, dateFormat, true);
+	}
 
 	public static Date getLaterDate(String inDate1, String inDate2,
 			String dateFormat) {
@@ -82,6 +90,10 @@ public class CommonFunction {
 			System.out.println(Warning_DateFormat);
 			return null;
 		}
+	}
+	
+	public static Date getLaterDate(String inDate1, String inDate2) {
+		return getLaterDate(inDate1, inDate2);
 	}
 
 	// public static String getLastDateFolder(String Parent, String DateFormat)
@@ -159,6 +171,10 @@ public class CommonFunction {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public static String getLastDateFile(String parent,int dateBeginIndex, String extensionFileName) {
+		return getLastDateFile(parent,CommonData.DEFAULT_DATE_FORMAT_SIMPLE,dateBeginIndex,extensionFileName);
 	}
 
 	public static String insertHTMLTag(String TAG, String text) {
