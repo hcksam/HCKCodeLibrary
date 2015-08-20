@@ -546,6 +546,15 @@ public class CommonFunction {
 			return fs.toLowerCase();
 		}
 	}
+	
+	public static int lastIndexOfUCL(String string) {        
+	    for(int i=string.length()-1; i>=0; i--) {
+	        if(Character.isUpperCase(string.charAt(i))) {
+	            return i;
+	        }
+	    }
+	    return -1;
+	}
 
 	public static void main(String args[]) {
 		System.out.println(getLastDateFile("C:/temp",
