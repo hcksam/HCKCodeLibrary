@@ -1,6 +1,11 @@
 package pers.hck.common;
 
 import java.io.File;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +22,24 @@ public class CommonFunction {
 	private final static String Warning_DateFormat = "Date format wrong!";
 	public final static char SIGN_SPACE = Character.toChars(1)[0];
 
+	public static boolean isASCII(String inString) {
+		byte bytearray []  = inString.getBytes();
+	    CharsetDecoder d = Charset.forName("US-ASCII").newDecoder();
+	    try {
+	      CharBuffer r = d.decode(ByteBuffer.wrap(bytearray));
+	      r.toString();
+	    }
+	    catch(CharacterCodingException e) {
+	      return false;
+	    }
+	    return true;
+	}
+	
+	public static boolean isNull(String inString) {
+		boolean isNull = (inString == null || inString.equals("") || inString.equalsIgnoreCase("null"));
+		return isNull;
+	}
+	
 	public static boolean isDate(String inString, String dateFormat) {
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
@@ -28,7 +51,7 @@ public class CommonFunction {
 	}
 	
 	public static boolean isDate(String inString) {
-		return isDate(CommonData.DEFAULT_DATE_FORMAT);
+		return isDate(inString, CommonData.DEFAULT_DATE_FORMAT);
 	}
 
 	public static String getStringToday(String dateFormat) {
