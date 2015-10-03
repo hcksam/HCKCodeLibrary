@@ -34,6 +34,10 @@ public class ExcelWriter {
 	
 	public boolean writeToExcel(ArrayList<ArrayList<String>> datas, int page) {
 		try {
+			if (!file.getParentFile().exists()){
+				file.getParentFile().mkdirs();
+			}
+			
 			WritableWorkbook workbook = Workbook.createWorkbook(file);
 			workbook.createSheet("Report", page);
 			WritableSheet sheet = workbook.getSheet(0);
