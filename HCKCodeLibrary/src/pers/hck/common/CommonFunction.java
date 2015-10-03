@@ -497,6 +497,19 @@ public class CommonFunction {
 		}
 		return datas;
 	}
+	
+	public static ArrayList<String> replaceNothingStringToNull(
+			ArrayList<String> datas) {
+		for (int i = 0; i < datas.size(); i++) {
+			String data = datas.get(i);
+			if (data != null) {
+				if (data.equalsIgnoreCase("null") || data.equals("")) {
+					datas.set(i, null);
+				}
+			}
+		}
+		return datas;
+	}
 
 	public static ArrayList<String> replaceNullStringToNull(
 			ArrayList<String> datas) {
