@@ -21,6 +21,10 @@ public class ExcelWriter {
 	public final static int MinWidth = 56;
 	public final static int Err = 7;
 	public final static int ASCIIWidth = 10;
+	public final static int TitleWordWidth = WordWidth * 3;
+	public final static int TitleASCIIWidth = ASCIIWidth * 3;
+	public final static int TitleMinWidth = MinWidth * 3;
+	
 	private File file;
 
 	public ExcelWriter() {
@@ -63,6 +67,7 @@ public class ExcelWriter {
 			
 			int[] maxWidth = new int[]{};
 			int maxColumns = 0;
+			int titleWidth = 0;
 			if (datas != null && datas.size() > 0 && datas.get(0) != null && datas.get(0).size() > 0){
 				maxColumns = datas.get(0).size();
 				maxWidth = new int[datas.get(0).size()];
@@ -80,6 +85,10 @@ public class ExcelWriter {
 				Label cell = new Label(0, 0, title, titleCellFormat);
 				sheet.addCell(cell);
 				sheet.mergeCells(0, 0, maxColumns-1, 0);
+				
+				titleWidth = (!CommonFunction.isASCII(title))? 
+						TitleWordWidth * title.length():TitleASCIIWidth * title.length();
+				titleWidth = (titleWidth > TitleMinWidth)? titleWidth:TitleMinWidth;
 			}
 			
 			for (int i=0;i<datas.size();i++){
@@ -97,8 +106,17 @@ public class ExcelWriter {
 				}
 			}
 			
+			int columnWidthSum = 0;
 			for(int i=0;i<maxWidth.length;i++){
 			    sheet.setColumnView(i, maxWidth[i] / Err);
+			    columnWidthSum += maxWidth[i];
+			}
+			
+			if (title != null && columnWidthSum < titleWidth){
+				int err = (titleWidth - columnWidthSum) / maxWidth.length;
+				for(int i=0;i<maxWidth.length;i++){
+				    sheet.setColumnView(i, (maxWidth[i] + err) / Err);
+				}
 			}
 
 			workbook.write();
