@@ -1,7 +1,7 @@
 package pers.hck.readwrite;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -45,7 +45,7 @@ public class XMLReader {
 	}
 
 	public static Node getSingleNode(NodeList inNodeList) {
-		ArrayList<Node> nodes = getNodes(inNodeList);
+		LinkedList<Node> nodes = getNodes(inNodeList);
 		if (nodes.size() >= 1) {
 			return getSingleNode(nodes.get(0));
 		} else {
@@ -54,7 +54,7 @@ public class XMLReader {
 	}
 
 	public static String getSingleNodeValue(NodeList inNodeList) {
-		ArrayList<Node> nodes = getNodes(inNodeList);
+		LinkedList<Node> nodes = getNodes(inNodeList);
 		if (nodes.size() >= 1) {
 			return getSingleNodeValue(nodes.get(0));
 		} else {
@@ -63,7 +63,7 @@ public class XMLReader {
 	}
 
 	public static Node getSingleNode(NodeList inNodeList, int index) {
-		ArrayList<Node> nodes = getNodes(inNodeList);
+		LinkedList<Node> nodes = getNodes(inNodeList);
 		if (nodes.size() > index) {
 			return getSingleNode(nodes.get(index));
 		} else {
@@ -72,7 +72,7 @@ public class XMLReader {
 	}
 
 	public static String getSingleNodeValue(NodeList inNodeList, int index) {
-		ArrayList<Node> nodes = getNodes(inNodeList);
+		LinkedList<Node> nodes = getNodes(inNodeList);
 		if (nodes.size() > index) {
 			return getSingleNodeValue(nodes.get(index));
 		} else {
@@ -80,8 +80,8 @@ public class XMLReader {
 		}
 	}
 
-	public static ArrayList<Node> getNodes(NodeList inNodeList) {
-		ArrayList<Node> nodes = new ArrayList<Node>();
+	public static LinkedList<Node> getNodes(NodeList inNodeList) {
+		LinkedList<Node> nodes = new LinkedList<Node>();
 		for (int i = 0; i < inNodeList.getLength(); i++) {
 			Node node = inNodeList.item(i);
 			if (node.getNodeType() != Node.ELEMENT_NODE)
@@ -91,9 +91,9 @@ public class XMLReader {
 		return nodes;
 	}
 
-	public static ArrayList<NodeList> getNodeLists(NodeList inNodeList) {
-		ArrayList<NodeList> nodeLists = new ArrayList<NodeList>();
-		ArrayList<Node> nodes = getNodes(inNodeList);
+	public static LinkedList<NodeList> getNodeLists(NodeList inNodeList) {
+		LinkedList<NodeList> nodeLists = new LinkedList<NodeList>();
+		LinkedList<Node> nodes = getNodes(inNodeList);
 		for (int i = 0; i < nodes.size(); i++) {
 			Node node = nodes.get(i);
 			if (node.getChildNodes().getLength() > 1) {
@@ -103,9 +103,9 @@ public class XMLReader {
 		return nodeLists;
 	}
 
-	public static ArrayList<String> getNodeValues(NodeList inNodeList) {
-		ArrayList<String> values = new ArrayList<String>();
-		ArrayList<Node> nodes = getNodes(inNodeList);
+	public static LinkedList<String> getNodeValues(NodeList inNodeList) {
+		LinkedList<String> values = new LinkedList<String>();
+		LinkedList<Node> nodes = getNodes(inNodeList);
 		for (int i = 0; i < nodes.size(); i++) {
 			Node node = nodes.get(i);
 			if (node.getChildNodes().getLength() == 1) {
@@ -160,11 +160,11 @@ public class XMLReader {
 				"C:/Temp/20130601/shop_location.xml"));
 		System.out.println(rixml.getRootElementName());
 		
-		ArrayList<Node> shops = XMLReader.getNodes(rixml.getRootNodeList());
+		LinkedList<Node> shops = XMLReader.getNodes(rixml.getRootNodeList());
 		for (int i = 0; i < shops.size(); i++) {
 			Node shop = shops.get(i);
 			System.out.println(shop.getNodeName());
-			ArrayList<Node> shopInfos = XMLReader.getNodes(shop
+			LinkedList<Node> shopInfos = XMLReader.getNodes(shop
 					.getChildNodes());
 			for (int j = 0; j < shopInfos.size(); j++) {
 				Node shopInfo = shopInfos.get(j);
@@ -178,7 +178,7 @@ public class XMLReader {
 				} else {
 					System.out.println(name + ": "
 							+ XMLReader.getSingleAttributeValue(shopInfo));
-					ArrayList<Node> shopDetails = XMLReader.getNodes(shopInfo
+					LinkedList<Node> shopDetails = XMLReader.getNodes(shopInfo
 							.getChildNodes());
 					for (int k = 0; k < shopDetails.size(); k++) {
 						Node shopDetail = shopDetails.get(k);

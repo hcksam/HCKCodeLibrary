@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Hashtable;
 
 import org.apache.poi.hwpf.HWPFDocument;
@@ -37,8 +37,8 @@ public class WordReader {
 	private HWPFDocument document;
 	private Range range;
 	private int PARAGRAPHTYPE;
-	private ArrayList<Integer[]> brIndex = new ArrayList<Integer[]>();
-	private ArrayList<String> paragraphs = new ArrayList<String>();
+	private LinkedList<Integer[]> brIndex = new LinkedList<Integer[]>();
+	private LinkedList<String> paragraphs = new LinkedList<String>();
 	private Hashtable<Integer, Integer> paragraphIndexMap = new Hashtable<Integer, Integer>();
 
 	public WordReader() {
@@ -63,7 +63,7 @@ public class WordReader {
 			String s = getParagraph(i, PARAGRAPHTYPE);
 			Integer[] wbi = { -1, -1 };
 			if (s != null) {
-				ArrayList<Integer> wbs = CommonFunction.getAllIndexOf(s,
+				LinkedList<Integer> wbs = CommonFunction.getAllIndexOf(s,
 						SIGN_BR.toString());
 				String es = s;
 				int bi = 0;
@@ -111,7 +111,7 @@ public class WordReader {
 	// return paragraph;
 	// }
 
-	public ArrayList<String> getParagraphs() {
+	public LinkedList<String> getParagraphs() {
 		return paragraphs;
 	}
 
@@ -337,7 +337,7 @@ public class WordReader {
 	// }
 
 	private static String replaceHyperLink(String paragraph, String[] FILTER) {
-		ArrayList<Integer> hlIndexs = CommonFunction.getAllIndexOf(paragraph,
+		LinkedList<Integer> hlIndexs = CommonFunction.getAllIndexOf(paragraph,
 				FILTER[0]);
 		String ts = paragraph;
 		int bIndex = 0;
@@ -399,7 +399,7 @@ public class WordReader {
 		int PARAGRAPHTYPE = WordReader.INDEX_PARAGRAPHTYPE_NOBLANKROW;
 		WordReader riw = new WordReader(new File(CommonData.DEFAULT_PATH,
 				"20130621c Discover HK SIM.doc"), PARAGRAPHTYPE);
-		ArrayList<String> s = riw.getParagraphs();
+		LinkedList<String> s = riw.getParagraphs();
 		for (int i = 0; i < s.size(); i++) {
 			System.out.println(i + ": " + s.get(i));
 			// riw.getTableCellParagraphIndex(i);
@@ -445,7 +445,7 @@ public class WordReader {
 		// int PARAGRAPHTYPE = ReadInWord.INDEX_PARAGRAPHTYPE_Normal;
 		
 		// for (int i = 0; i < s.size(); i++) {
-		// ArrayList<Integer> indexs = CommonFunction.getAllIndexOfWord(
+		// LinkedList<Integer> indexs = CommonFunction.getAllIndexOfWord(
 		// s.get(i), "now");
 		// for (int j = 0; j < indexs.size(); j++) {
 		// Integer index = indexs.get(j);
@@ -455,7 +455,7 @@ public class WordReader {
 		// }
 
 		// for (int i = 0; i < s.size(); i++) {
-		// ArrayList<Integer[]> indexs = CommonFunction.getAllIndexOfURL(s
+		// LinkedList<Integer[]> indexs = CommonFunction.getAllIndexOfURL(s
 		// .get(i));
 		// for (int j = 0; j < indexs.size(); j++) {
 		// Integer[] index = indexs.get(j);
@@ -463,7 +463,7 @@ public class WordReader {
 		// + s.get(i).substring(index[0], index[1]));
 		// }
 		// }
-		// ArrayList<Integer[]> indexs =
+		// LinkedList<Integer[]> indexs =
 		// CommonFunction.getAllIndexOfURL(s.get(22));
 		// System.out.println(indexs.size());
 

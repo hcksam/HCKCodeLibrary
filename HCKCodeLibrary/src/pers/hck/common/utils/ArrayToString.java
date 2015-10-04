@@ -1,6 +1,6 @@
 package pers.hck.common.utils;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ArrayToString {
 	public final static int INDEX_FORMAT_NORMAL = 0;
@@ -15,7 +15,7 @@ public class ArrayToString {
 		return toString(array, false);
 	}
 	
-	public static String toString(ArrayList<Object> array){
+	public static String toString(List<Object> array){
 		return toString(array, INDEX_FORMAT_NORMAL);
 	}
 	
@@ -27,7 +27,7 @@ public class ArrayToString {
 		return toString(array,"[]",false);
 	}
 	
-	public static String toJSArray(ArrayList<Object> array){
+	public static String toJSArray(List<Object> array){
 		return toString(array,"[]",INDEX_FORMAT_STRING);
 	}
 	
@@ -53,7 +53,7 @@ public class ArrayToString {
 		return brackets.charAt(0)+toString(array, integerFormat)+brackets.charAt(1);
 	}
 	
-	public static String toString(ArrayList<Object> array, String brackets, int INDEX_FORMAT){
+	public static String toString(List<Object> array, String brackets, int INDEX_FORMAT){
 		if (brackets == null){
 			return toString(array, INDEX_FORMAT);
 		}
@@ -92,7 +92,7 @@ public class ArrayToString {
 		return s;
 	}
 	
-	public static String toString(ArrayList<Object> array, int INDEX_FORMAT){
+	public static String toString(List<Object> array, int INDEX_FORMAT){
 		String s = "";
 		for (int i=0;i<array.size();i++){
 			Object object = array.get(i);

@@ -3,7 +3,7 @@ package pers.hck.readwrite;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import pers.hck.common.CommonData;
 import jxl.Cell;
@@ -23,8 +23,8 @@ public class ExcelReader {
 		this.file = file;
 	}
 
-	public ArrayList<ArrayList<String>> getSheetData(int page, int INDEX_READTYPE) {
-		ArrayList<ArrayList<String>> outDatas = new ArrayList<ArrayList<String>>();
+	public LinkedList<LinkedList<String>> getSheetData(int page, int INDEX_READTYPE) {
+		LinkedList<LinkedList<String>> outDatas = new LinkedList<LinkedList<String>>();
 		try {
 			InputStream is = new FileInputStream(file);
 			Workbook rwb = Workbook.getWorkbook(is);
@@ -32,7 +32,7 @@ public class ExcelReader {
 //			System.out.println("Row: "+rs.getRows());
 //			System.out.println("Column: "+rs.getColumns());
 			for (int i = 0; i < rs.getRows(); i++) {
-				ArrayList<String> data = new ArrayList<String>();
+				LinkedList<String> data = new LinkedList<String>();
 				boolean haveData = false;
 				for (int j = 0; j < rs.getColumns(); j++) {
 					Cell cell = rs.getCell(j, i);
@@ -59,8 +59,8 @@ public class ExcelReader {
 		return (INDEX_READTYPE == 1) ? removeNullColumn(outDatas) : outDatas;
 	}
 
-	private ArrayList<ArrayList<String>> removeNullColumn(
-			ArrayList<ArrayList<String>> datas) {
+	private LinkedList<LinkedList<String>> removeNullColumn(
+			LinkedList<LinkedList<String>> datas) {
 		if (datas == null) {
 			return null;
 		}
@@ -102,7 +102,7 @@ public class ExcelReader {
 	}
 
 	public void showDatas(int page, int INDEX_READTYPE) {
-		ArrayList<ArrayList<String>> datas = getSheetData(page, INDEX_READTYPE);
+		LinkedList<LinkedList<String>> datas = getSheetData(page, INDEX_READTYPE);
 		for (int i = 0; i < datas.size(); i++) {
 			for (int j = 0; j < datas.get(i).size(); j++) {
 				System.out.print(datas.get(i).get(j) + " || ");

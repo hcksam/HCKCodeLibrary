@@ -1,7 +1,8 @@
 package pers.hck.readwrite;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import jxl.Workbook;
 import jxl.format.Alignment;
@@ -30,19 +31,19 @@ public class ExcelWriter {
 		this.file = file;
 	}
 	
-	public boolean writeToExcel(ArrayList<ArrayList<String>> datas) {
+	public boolean writeToExcel(LinkedList<LinkedList<String>> datas) {
 		return writeToExcel(datas, 0, null, true);
 	}
 	
-	public boolean writeToExcel(ArrayList<ArrayList<String>> datas, String title) {
+	public boolean writeToExcel(LinkedList<LinkedList<String>> datas, String title) {
 		return writeToExcel(datas, 0, title, true);
 	}
 	
-	public boolean writeToExcel(ArrayList<ArrayList<String>> datas, String title, boolean contentBorder) {
+	public boolean writeToExcel(LinkedList<LinkedList<String>> datas, String title, boolean contentBorder) {
 		return writeToExcel(datas, 0, title, contentBorder);
 	}
 	
-	public boolean writeToExcel(ArrayList<ArrayList<String>> datas, int page, String title, boolean contentBorder) {
+	public boolean writeToExcel(LinkedList<LinkedList<String>> datas, int page, String title, boolean contentBorder) {
 		try {
 			if (!file.getParentFile().exists()){
 				file.getParentFile().mkdirs();
@@ -82,7 +83,7 @@ public class ExcelWriter {
 			}
 			
 			for (int i=0;i<datas.size();i++){
-				ArrayList<String> row = datas.get(i);
+				List<String> row = datas.get(i);
 				int rowIndex = (title == null)? i:i+1;
 				for (int j=0;j<row.size();j++){
 					String column = String.valueOf(row.get(j));

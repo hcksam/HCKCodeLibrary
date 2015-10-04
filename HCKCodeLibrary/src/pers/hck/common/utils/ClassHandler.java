@@ -2,23 +2,22 @@ package pers.hck.common.utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedList;
 
 public class ClassHandler {
 	public final static int TYPE_ALL = 0;
 	public final static int TYPE_BASE = 1;
 	public final static int TYPE_INSIDE = 2;
 
-	public static ArrayList<String> getBeanGetMethodNames(Class bean, int TYPE, String beanType) {
-		ArrayList<String> methodNames = new ArrayList<String>();
+	public static LinkedList<String> getBeanGetMethodNames(Class bean, int TYPE, String beanType) {
+		LinkedList<String> methodNames = new LinkedList<String>();
 		try {
 			Method[] methods = bean.getMethods();
 			for (Method method : methods) {
 				String methodName = method.getName();
 				if (methodName.substring(0, 3).equalsIgnoreCase("get")
 						&& !methodName.equalsIgnoreCase("getClass")) {
-					ArrayList<String> beanValueNames = null;
+					LinkedList<String> beanValueNames = null;
 					switch (TYPE){
 					case TYPE_ALL:
 						methodNames.add(methodName);
@@ -51,14 +50,14 @@ public class ClassHandler {
 		}
 	}
 
-	public static ArrayList<String> getBeanSetMethodNames(Class bean, int TYPE, String beanType) {
-		ArrayList<String> methodNames = new ArrayList<String>();
+	public static LinkedList<String> getBeanSetMethodNames(Class bean, int TYPE, String beanType) {
+		LinkedList<String> methodNames = new LinkedList<String>();
 		try {
 			Method[] methods = bean.getMethods();
 			for (Method method : methods) {
 				String methodName = method.getName();
 				if (methodName.substring(0, 3).equalsIgnoreCase("set")){
-					ArrayList<String> beanValueNames = null;
+					LinkedList<String> beanValueNames = null;
 					switch (TYPE){
 					case TYPE_ALL:
 						methodNames.add(methodName);
@@ -91,11 +90,11 @@ public class ClassHandler {
 		}
 	}
 	
-	public static ArrayList<String> getBeanGetMethodNames(Class bean) {
+	public static LinkedList<String> getBeanGetMethodNames(Class bean) {
 		return getBeanGetMethodNames(bean, TYPE_ALL, null);
 	}
 	
-	public static ArrayList<String> getBeanGetMethodNames(String beanPath) {
+	public static LinkedList<String> getBeanGetMethodNames(String beanPath) {
 		try {
 			return getBeanGetMethodNames(Class.forName(beanPath));
 		} catch (Exception e) {
@@ -104,11 +103,11 @@ public class ClassHandler {
 		}
 	}
 	
-	public static ArrayList<String> getBeanSetMethodNames(Class bean) {
+	public static LinkedList<String> getBeanSetMethodNames(Class bean) {
 		return getBeanSetMethodNames(bean, TYPE_ALL, null);
 	}
 	
-	public static ArrayList<String> getBeanSetMethodNames(String beanPath) {
+	public static LinkedList<String> getBeanSetMethodNames(String beanPath) {
 		try {
 			return getBeanSetMethodNames(Class.forName(beanPath));
 		} catch (Exception e) {
@@ -117,11 +116,11 @@ public class ClassHandler {
 		}
 	}
 	
-	public static ArrayList<String> getBaseBeanGetMethodNames(Class bean) {
+	public static LinkedList<String> getBaseBeanGetMethodNames(Class bean) {
 		return getBeanGetMethodNames(bean, TYPE_BASE, null);
 	}
 	
-	public static ArrayList<String> getBaseBeanGetMethodNames(String beanPath) {
+	public static LinkedList<String> getBaseBeanGetMethodNames(String beanPath) {
 		try {
 			return getBaseBeanGetMethodNames(Class.forName(beanPath));
 		} catch (Exception e) {
@@ -130,11 +129,11 @@ public class ClassHandler {
 		}
 	}
 	
-	public static ArrayList<String> getBaseBeanSetMethodNames(Class bean) {
+	public static LinkedList<String> getBaseBeanSetMethodNames(Class bean) {
 		return getBeanSetMethodNames(bean, TYPE_BASE, null);
 	}
 	
-	public static ArrayList<String> getBaseBeanSetMethodNames(String beanPath) {
+	public static LinkedList<String> getBaseBeanSetMethodNames(String beanPath) {
 		try {
 			return getBaseBeanSetMethodNames(Class.forName(beanPath));
 		} catch (Exception e) {
@@ -143,11 +142,11 @@ public class ClassHandler {
 		}
 	}
 	
-	public static ArrayList<String> getInsideBeanGetMethodNames(Class bean, String beanType) {
+	public static LinkedList<String> getInsideBeanGetMethodNames(Class bean, String beanType) {
 		return getBeanGetMethodNames(bean, TYPE_INSIDE, beanType);
 	}
 	
-	public static ArrayList<String> getInsideBeanGetMethodNames(String beanPath, String beanType) {
+	public static LinkedList<String> getInsideBeanGetMethodNames(String beanPath, String beanType) {
 		try {
 			return getInsideBeanGetMethodNames(Class.forName(beanPath), beanType);
 		} catch (Exception e) {
@@ -156,11 +155,11 @@ public class ClassHandler {
 		}
 	}
 	
-	public static ArrayList<String> getInsideBeanSetMethodNames(Class bean, String beanType) {
+	public static LinkedList<String> getInsideBeanSetMethodNames(Class bean, String beanType) {
 		return getBeanSetMethodNames(bean, TYPE_INSIDE, beanType);
 	}
 	
-	public static ArrayList<String> getInsideBeanSetMethodNames(String beanPath, String beanType) {
+	public static LinkedList<String> getInsideBeanSetMethodNames(String beanPath, String beanType) {
 		try {
 			return getInsideBeanSetMethodNames(Class.forName(beanPath), beanType);
 		} catch (Exception e) {
@@ -169,7 +168,7 @@ public class ClassHandler {
 		}
 	}
 
-	public static ArrayList<String> getBeanValueNames(String beanPath) {
+	public static LinkedList<String> getBeanValueNames(String beanPath) {
 		try {
 			return getBeanValueNames(Class.forName(beanPath));
 		} catch (Exception e) {
@@ -178,8 +177,8 @@ public class ClassHandler {
 		}
 	}
 
-	public static ArrayList<String> getBeanValueNames(Class bean) {
-		ArrayList<String> valueNames = new ArrayList<String>();
+	public static LinkedList<String> getBeanValueNames(Class bean) {
+		LinkedList<String> valueNames = new LinkedList<String>();
 		try {
 			Field[] fields = bean.getDeclaredFields();
 			for (Field field : fields) {
@@ -193,9 +192,9 @@ public class ClassHandler {
 		}
 	}
 
-	public static ArrayList<String> getBaseBeanValueNames(Class bean) {
-		ArrayList<String> valueNames = new ArrayList<String>();
-		ArrayList<String> baseType = new ArrayList<String>();
+	public static LinkedList<String> getBaseBeanValueNames(Class bean) {
+		LinkedList<String> valueNames = new LinkedList<String>();
+		LinkedList<String> baseType = new LinkedList<String>();
 		baseType.add("class java.lang.Integer");
 		baseType.add("class java.lang.String");
 		baseType.add("class java.util.Date");
@@ -216,7 +215,7 @@ public class ClassHandler {
 		}
 	}
 	
-	public static ArrayList<String> getBaseBeanValueNames(String beanPath) {
+	public static LinkedList<String> getBaseBeanValueNames(String beanPath) {
 		try {
 			return getBaseBeanValueNames(Class.forName(beanPath));
 		} catch (Exception e) {
@@ -225,7 +224,7 @@ public class ClassHandler {
 		}
 	}
 	
-	public static ArrayList<String> getInsideBeanNames(String beanPath, String beanType) {
+	public static LinkedList<String> getInsideBeanNames(String beanPath, String beanType) {
 		try {
 			return getInsideBeanNames(Class.forName(beanPath), beanType);
 		} catch (Exception e) {
@@ -234,12 +233,12 @@ public class ClassHandler {
 		}
 	}
 	
-	public static ArrayList<String> getInsideBeanNames(Class bean, String beanType) {
+	public static LinkedList<String> getInsideBeanNames(Class bean, String beanType) {
 		return getInsideBeanNames(bean, new String[]{beanType});
 	}
 	
-	public static ArrayList<String> getInsideBeanNames(Class bean, String[] beanTypes) {
-		ArrayList<String> valueNames = new ArrayList<String>();
+	public static LinkedList<String> getInsideBeanNames(Class bean, String[] beanTypes) {
+		LinkedList<String> valueNames = new LinkedList<String>();
 		
 		try {
 			Field[] fields = bean.getDeclaredFields();

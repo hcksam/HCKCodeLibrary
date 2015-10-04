@@ -7,7 +7,7 @@ import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Date;
 import java.util.List;
 
@@ -214,8 +214,8 @@ public class CommonFunction {
 		return CommonData.TAG_CLOSE + tag + CommonData.SIGN_CLOSETAG;
 	}
 
-	public static ArrayList<Integer> getAllIndexOf(String target, String keyword) {
-		ArrayList<Integer> indexs = new ArrayList<Integer>();
+	public static LinkedList<Integer> getAllIndexOf(String target, String keyword) {
+		LinkedList<Integer> indexs = new LinkedList<Integer>();
 		int index = target.indexOf(keyword);
 		String s = target;
 		while (index >= 0) {
@@ -236,9 +236,9 @@ public class CommonFunction {
 		return s;
 	}
 
-	public static ArrayList<Integer[]> getAllIndexOfURL(String target) {
-		ArrayList<Integer[]> indexs = new ArrayList<Integer[]>();
-		ArrayList<Integer> wwwIndexs = getAllIndexOf(target, US1);
+	public static LinkedList<Integer[]> getAllIndexOfURL(String target) {
+		LinkedList<Integer[]> indexs = new LinkedList<Integer[]>();
+		LinkedList<Integer> wwwIndexs = getAllIndexOf(target, US1);
 		int doneIndex = 0;
 
 		for (int i = 0; i < wwwIndexs.size(); i++) {
@@ -326,9 +326,9 @@ public class CommonFunction {
 		return indexs;
 	}
 
-	public static ArrayList<Integer[]> getAllIndexOfEmail(String target) {
-		ArrayList<Integer[]> indexs = new ArrayList<Integer[]>();
-		ArrayList<Integer> mailIndexs = getAllIndexOf(target, MS);
+	public static LinkedList<Integer[]> getAllIndexOfEmail(String target) {
+		LinkedList<Integer[]> indexs = new LinkedList<Integer[]>();
+		LinkedList<Integer> mailIndexs = getAllIndexOf(target, MS);
 		for (int i = 0; i < mailIndexs.size(); i++) {
 			int mailIndex = mailIndexs.get(i);
 			if (mailIndex != 0 && mailIndex + 3 < target.length()) {
@@ -361,10 +361,10 @@ public class CommonFunction {
 		return indexs;
 	}
 
-	public static ArrayList<Integer> getAllIndexOfWord(String target,
+	public static LinkedList<Integer> getAllIndexOfWord(String target,
 			String word) {
-		ArrayList<Integer> indexs = new ArrayList<Integer>();
-		ArrayList<Integer> dIndexs = getAllIndexOf(target, word);
+		LinkedList<Integer> indexs = new LinkedList<Integer>();
+		LinkedList<Integer> dIndexs = getAllIndexOf(target, word);
 		for (int i = 0; i < dIndexs.size(); i++) {
 			boolean left = false;
 			boolean right = false;
@@ -396,7 +396,7 @@ public class CommonFunction {
 
 			if (left && right) {
 				boolean ignore = false;
-				ArrayList<Integer[]> ignoreIndexs = getAllIndexOfURL(target);
+				LinkedList<Integer[]> ignoreIndexs = getAllIndexOfURL(target);
 				for (int j = 0; j < ignoreIndexs.size(); j++) {
 					Integer[] ignoreIndex = ignoreIndexs.get(j);
 					if (dIndex >= ignoreIndex[0] && dIndex < ignoreIndex[1]) {
@@ -439,7 +439,7 @@ public class CommonFunction {
 
 	public static String getReplaceAll(String inString, String targetString,
 			String newString) {
-		ArrayList<Integer> indexs = getAllIndexOf(inString, targetString);
+		LinkedList<Integer> indexs = getAllIndexOf(inString, targetString);
 		String outString = "";
 		String es = inString;
 		int bi = 0;
@@ -462,10 +462,10 @@ public class CommonFunction {
 				.equalsIgnoreCase(extensionFileName);
 	}
 
-	public static ArrayList<String> getSplit(String inString, String sign,
+	public static LinkedList<String> getSplit(String inString, String sign,
 			boolean cutSign) {
-		ArrayList<Integer> indexs = getAllIndexOf(inString, sign);
-		ArrayList<String> outString = new ArrayList<String>();
+		LinkedList<Integer> indexs = getAllIndexOf(inString, sign);
+		LinkedList<String> outString = new LinkedList<String>();
 		String es = inString;
 		int bIndex = 0;
 		for (int i = 0; i < indexs.size(); i++) {
@@ -483,8 +483,8 @@ public class CommonFunction {
 		return outString;
 	}
 
-	public static ArrayList<String> replaceNullStringToNothing(
-			ArrayList<String> datas) {
+	public static LinkedList<String> replaceNullStringToNothing(
+			LinkedList<String> datas) {
 		for (int i = 0; i < datas.size(); i++) {
 			String data = datas.get(i);
 			if (data == null) {
@@ -498,8 +498,8 @@ public class CommonFunction {
 		return datas;
 	}
 	
-	public static ArrayList<String> replaceNothingStringToNull(
-			ArrayList<String> datas) {
+	public static LinkedList<String> replaceNothingStringToNull(
+			LinkedList<String> datas) {
 		for (int i = 0; i < datas.size(); i++) {
 			String data = datas.get(i);
 			if (data != null) {
@@ -511,8 +511,8 @@ public class CommonFunction {
 		return datas;
 	}
 
-	public static ArrayList<String> replaceNullStringToNull(
-			ArrayList<String> datas) {
+	public static LinkedList<String> replaceNullStringToNull(
+			LinkedList<String> datas) {
 		for (int i = 0; i < datas.size(); i++) {
 			String data = datas.get(i);
 			if (data != null) {

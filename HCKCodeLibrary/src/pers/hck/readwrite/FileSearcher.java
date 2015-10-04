@@ -2,7 +2,7 @@ package pers.hck.readwrite;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class FileSearcher {
 	private String rootPath;
@@ -11,10 +11,10 @@ public class FileSearcher {
 		this.rootPath = rootPath;
 	}
 
-	public ArrayList<File> searchFile(FileFilter filter) {
-		ArrayList<File> files = new ArrayList<File>();
+	public LinkedList<File> searchFile(FileFilter filter) {
+		LinkedList<File> files = new LinkedList<File>();
 		try {
-			ArrayList<File> directorys = new ArrayList<File>();
+			LinkedList<File> directorys = new LinkedList<File>();
 			directorys.add(new File(rootPath));
 			while (directorys.size() != 0) {
 				File[] filesSrc = (filter == null) ? directorys.get(0)

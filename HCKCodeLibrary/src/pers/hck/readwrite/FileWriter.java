@@ -4,7 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
+import java.util.List;
 
 import pers.hck.common.CommonData;
 
@@ -22,7 +22,7 @@ public class FileWriter {
 		this.encode = encode;
 	}
 
-	public void write(ArrayList<String> inDatas) {
+	public void write(List<String> inDatas) {
 		if (writeFile(inDatas)) {
 			System.out.println("Write file: " + file.getPath() + " successful!");
 		} else {
@@ -30,7 +30,7 @@ public class FileWriter {
 		}
 	}
 
-	public boolean writeFile(ArrayList<String> inDatas) {
+	public boolean writeFile(List<String> inDatas) {
 		if (file.getParentFile() != null) {
 			file.getParentFile().mkdirs();
 		}

@@ -1,6 +1,7 @@
 package pers.hck.variable;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DataTable {
 	public final static int INDEX_ROW = 0;
@@ -8,12 +9,12 @@ public class DataTable {
 
 	private final String Warning_InputNull = "Fail! Some input is null!";
 
-	private ArrayList<ArrayList<Object>> DataTable = new ArrayList<ArrayList<Object>>();
+	private LinkedList<LinkedList<Object>> DataTable = new LinkedList<LinkedList<Object>>();
 
 	public void addRow(Object[] Columns) {
 		if (Columns != null) {
 			if (Columns.length == getColumnSize() || getColumnSize() == 0) {
-				ArrayList<Object> datas = new ArrayList<Object>();
+				LinkedList<Object> datas = new LinkedList<Object>();
 				for (int i = 0; i < Columns.length; i++) {
 					datas.add(Columns[i]);
 				}
@@ -39,7 +40,7 @@ public class DataTable {
 					setRowSize(Rows.length);
 				}
 				for (int i = 0; i < Rows.length; i++) {
-					ArrayList<Object> datas = getRowDatas(i);
+					LinkedList<Object> datas = getRowDatas(i);
 					datas.add(Rows[i]);
 					DataTable.set(i, datas);
 				}
@@ -69,7 +70,7 @@ public class DataTable {
 	public boolean removeColumn(int ColumnIndex) {
 		if (haveColumnIndex(ColumnIndex)) {
 			for (int i = 0; i < DataTable.size(); i++) {
-				ArrayList<Object> datas = DataTable.get(i);
+				LinkedList<Object> datas = DataTable.get(i);
 				datas.remove(ColumnIndex);
 				DataTable.set(i, datas);
 			}
@@ -84,15 +85,15 @@ public class DataTable {
 				.get(RowIndex).get(ColumnIndex) : null;
 	}
 
-	public ArrayList<Object> getRowDatas(int RowIndex) {
+	public LinkedList<Object> getRowDatas(int RowIndex) {
 		return (haveRowIndex(RowIndex)) ? DataTable.get(RowIndex) : null;
 	}
 
-	public ArrayList<Object> getColumnDatas(int ColumnIndex) {
+	public LinkedList<Object> getColumnDatas(int ColumnIndex) {
 		if (haveColumnIndex(ColumnIndex)) {
-			ArrayList<Object> datas = new ArrayList<Object>();
+			LinkedList<Object> datas = new LinkedList<Object>();
 			for (int i = 0; i < getRowSize(); i++) {
-				ArrayList<Object> rowDatas = getRowDatas(i);
+				LinkedList<Object> rowDatas = getRowDatas(i);
 				datas.add(rowDatas.get(ColumnIndex));
 			}
 			return datas;
@@ -104,7 +105,7 @@ public class DataTable {
 	public boolean containData(Object Data) {
 		if (Data != null) {
 			for (int i = 0; i < getColumnSize(); i++) {
-				ArrayList<Object> datas = getRowDatas(i);
+				LinkedList<Object> datas = getRowDatas(i);
 				if (datas.contains(Data)) {
 					return true;
 				}
@@ -120,12 +121,12 @@ public class DataTable {
 		if (Data != null) {
 			if (isRow(ActionIndex)) {
 				if (haveRowIndex(Index)) {
-					ArrayList<Object> rowDatas = getRowDatas(Index);
+					LinkedList<Object> rowDatas = getRowDatas(Index);
 					return rowDatas.contains(Data);
 				}
 			} else if (isColumn(ActionIndex)) {
 				if (haveColumnIndex(Index)) {
-					ArrayList<Object> columnDatas = getColumnDatas(Index);
+					LinkedList<Object> columnDatas = getColumnDatas(Index);
 					return columnDatas.contains(Data);
 				}
 			}
@@ -136,11 +137,11 @@ public class DataTable {
 		}
 	}
 
-	public ArrayList<Integer[]> searchData(Object Data) {
+	public LinkedList<Integer[]> searchData(Object Data) {
 		if (Data != null) {
-			ArrayList<Integer[]> position = new ArrayList<Integer[]>();
+			LinkedList<Integer[]> position = new LinkedList<Integer[]>();
 			for (int i = 0; i < getRowSize(); i++) {
-				ArrayList<Object> datas = getRowDatas(i);
+				LinkedList<Object> datas = getRowDatas(i);
 				int index = datas.indexOf(Data);
 				if (index >= 0) {
 					position.add(new Integer[] { i, index });
@@ -153,10 +154,10 @@ public class DataTable {
 		}
 	}
 
-	public ArrayList<Integer> searchData(Object Data, int Index, int ActionIndex) {
+	public LinkedList<Integer> searchData(Object Data, int Index, int ActionIndex) {
 		if (Data != null) {
-			ArrayList<Integer> indexs = new ArrayList<Integer>();
-			ArrayList<Object> datas = null;
+			LinkedList<Integer> indexs = new LinkedList<Integer>();
+			LinkedList<Object> datas = null;
 			if (isRow(ActionIndex)) {
 				if (haveRowIndex(Index)) {
 					datas = getRowDatas(Index);
@@ -183,8 +184,8 @@ public class DataTable {
 	public Object getExchangeData(int InIndex, Object Data, int OutIndex,
 			int ActionIndex) {
 		if (Data != null) {
-			ArrayList<Object> inDatas = null;
-			ArrayList<Object> outDatas = null;
+			LinkedList<Object> inDatas = null;
+			LinkedList<Object> outDatas = null;
 			if (isRow(ActionIndex)) {
 				if (haveRowIndex(InIndex) && haveRowIndex(OutIndex)) {
 					inDatas = getRowDatas(InIndex);
@@ -212,10 +213,10 @@ public class DataTable {
 		return null;
 	}
 
-	public ArrayList<Object> getExchangeDatas(int InIndex,
-			ArrayList<Object> Datas, int OutIndex, int ActionIndex) {
+	public LinkedList<Object> getExchangeDatas(int InIndex,
+			List<Object> Datas, int OutIndex, int ActionIndex) {
 		if (Datas != null) {
-			ArrayList<Object> datas = new ArrayList<Object>();
+			LinkedList<Object> datas = new LinkedList<Object>();
 			int c = 0;
 			for (int i = 0; i < Datas.size(); i++) {
 				Object data = getExchangeData(InIndex, Datas.get(i), OutIndex,
@@ -234,7 +235,7 @@ public class DataTable {
 
 	public Object getExchangeData(Object Data, int OutIndex, int ActionIndex) {
 		if (Data != null) {
-			ArrayList<Object> outDatas = null;
+			LinkedList<Object> outDatas = null;
 			int index = -1;
 			if (isRow(ActionIndex)) {
 				if (haveRowIndex(OutIndex)) {
@@ -267,10 +268,10 @@ public class DataTable {
 		}
 	}
 
-	public ArrayList<Object> getExchangeDatas(ArrayList<Object> Datas,
+	public LinkedList<Object> getExchangeDatas(List<Object> Datas,
 			int OutIndex, int ActionIndex) {
 		if (Datas != null) {
-			ArrayList<Object> datas = new ArrayList<Object>();
+			LinkedList<Object> datas = new LinkedList<Object>();
 			int c = 0;
 			for (int i = 0; i < Datas.size(); i++) {
 				Object data = getExchangeData(Datas.get(i), OutIndex,
@@ -316,7 +317,7 @@ public class DataTable {
 
 	private void setRowSize(int size) {
 		for (int i = 0; i < size; i++) {
-			DataTable.add(new ArrayList<Object>());
+			DataTable.add(new LinkedList<Object>());
 		}
 	}
 

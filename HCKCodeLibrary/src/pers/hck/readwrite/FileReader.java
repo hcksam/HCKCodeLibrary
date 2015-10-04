@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import pers.hck.common.CommonData;
 
@@ -23,18 +23,18 @@ public class FileReader {
 		this.encode = encode;
 	}
 	
-	public ArrayList<String> getDatas(){
+	public LinkedList<String> getDatas(){
 		return readInFile(false);
 	}
 	
-	public ArrayList<String> getDatasWithSpace(){
+	public LinkedList<String> getDatasWithSpace(){
 		return readInFile(true);
 	}
 	
 /*
-	public ArrayList<String> getCoding(String[][] filter) {
+	public LinkedList<String> getCoding(String[][] filter) {
 		try {
-			ArrayList<String> codes = readInFile(false);
+			LinkedList<String> codes = readInFile(false);
 			codes = (filter == null) ? codes : CodeFilter(codes,
 					Integer.parseInt(filter[0][0]), filter[1]);
 			return codes;
@@ -44,9 +44,9 @@ public class FileReader {
 		}
 	}
 	
-	public ArrayList<String> getCoding(ArrayList<String> inCodes, String[][] filter) {
+	public LinkedList<String> getCoding(LinkedList<String> inCodes, String[][] filter) {
 		try {
-			ArrayList<String> codes = inCodes;
+			LinkedList<String> codes = inCodes;
 			codes = (filter == null) ? codes : CodeFilter(codes,
 					Integer.parseInt(filter[0][0]), filter[1]);
 			return codes;
@@ -57,8 +57,8 @@ public class FileReader {
 	}
 */
 	
-	private ArrayList<String> readInFile(boolean needSpace) {
-		ArrayList<String> codes = new ArrayList<String>();
+	private LinkedList<String> readInFile(boolean needSpace) {
+		LinkedList<String> codes = new LinkedList<String>();
 		try {
 			FileInputStream fis = new FileInputStream(file);
 			InputStreamReader isr = new InputStreamReader(fis, encode);
@@ -85,9 +85,9 @@ public class FileReader {
 	}
 
 	/*
-	private ArrayList<String> CodeFilter(ArrayList<String> inCode, int index,
+	private LinkedList<String> CodeFilter(LinkedList<String> inCode, int index,
 			String[] tags) {
-		ArrayList<String> outCode = new ArrayList<String>();
+		LinkedList<String> outCode = new LinkedList<String>();
 //		System.out.println(inCode+" "+index+" "+tags);
 		boolean b = false;
 		for (int i = 0; i < inCode.size(); i++) {
