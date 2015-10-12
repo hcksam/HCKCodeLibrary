@@ -4,6 +4,7 @@ import java.io.File;
 
 public class CommonData {
 	public final static String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
+	public final static String DEFAULT_DATE_FORMAT_YEARMONTH = "yyyy-MM";
 	public final static String DEFAULT_DATE_FORMAT_SIMPLE = "yyyyMMdd";
 	public final static String SIGN_VERSION = "_V";
 	
