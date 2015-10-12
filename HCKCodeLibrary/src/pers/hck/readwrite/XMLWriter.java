@@ -26,6 +26,14 @@ public class XMLWriter {
 	}
 
 	public void write() {
+		write(file, document);
+	}
+
+	public boolean writeXML() {
+		return writeXML(file, document);
+	}
+	
+	public void write(File file, Document document) {
 		if (writeXML()) {
 			System.out
 					.println("Write file: " + file.getPath() + " successful!");
@@ -33,8 +41,8 @@ public class XMLWriter {
 			System.out.println("Write file: " + file.getPath() + " fail!");
 		}
 	}
-
-	public boolean writeXML() {
+	
+	public static boolean writeXML(File file, Document document) {
 		try {
 			TransformerFactory transformerFactory = TransformerFactory
 					.newInstance();

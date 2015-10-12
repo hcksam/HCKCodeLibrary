@@ -48,6 +48,22 @@ public class ExcelWriter {
 	}
 	
 	public boolean writeToExcel(LinkedList<LinkedList<String>> datas, int page, String title, boolean contentBorder) {
+		return writeToExcel(file, datas, page, title, contentBorder);
+	}
+	
+	public static boolean writeToExcel(File file, LinkedList<LinkedList<String>> datas) {
+		return writeToExcel(file, datas, 0, null, true);
+	}
+	
+	public static boolean writeToExcel(File file, LinkedList<LinkedList<String>> datas, String title) {
+		return writeToExcel(file, datas, 0, title, true);
+	}
+	
+	public static boolean writeToExcel(File file, LinkedList<LinkedList<String>> datas, String title, boolean contentBorder) {
+		return writeToExcel(file, datas, 0, title, contentBorder);
+	}
+	
+	public static boolean writeToExcel(File file, LinkedList<LinkedList<String>> datas, int page, String title, boolean contentBorder) {
 		try {
 			if (!file.getParentFile().exists()){
 				file.getParentFile().mkdirs();

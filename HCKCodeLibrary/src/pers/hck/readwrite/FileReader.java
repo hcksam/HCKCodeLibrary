@@ -11,24 +11,31 @@ import pers.hck.common.CommonData;
 
 public class FileReader {
 	private File file;
-	private String encode;
+	private static String encode = CommonData.DEFAULT_ENCODE_CHINESE;
 	
 	public FileReader(){
 		this.file = CommonData.DEFAULT_FILE;
-		this.encode = CommonData.DEFAULT_ENCODE_CHINESE;
 	}
 	
 	public FileReader(File file, String encode){
 		this.file = file;
-		this.encode = encode;
+		FileReader.encode = encode;
 	}
 	
 	public LinkedList<String> getDatas(){
-		return readInFile(false);
+		return getDatas(file);
 	}
 	
 	public LinkedList<String> getDatasWithSpace(){
-		return readInFile(true);
+		return getDatasWithSpace(file);
+	}
+	
+	public static LinkedList<String> getDatas(File file){
+		return readInFile(file, false);
+	}
+	
+	public static LinkedList<String> getDatasWithSpace(File file){
+		return readInFile(file, true);
 	}
 	
 /*
@@ -57,7 +64,7 @@ public class FileReader {
 	}
 */
 	
-	private LinkedList<String> readInFile(boolean needSpace) {
+	private static LinkedList<String> readInFile(File file, boolean needSpace) {
 		LinkedList<String> codes = new LinkedList<String>();
 		try {
 			FileInputStream fis = new FileInputStream(file);

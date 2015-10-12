@@ -24,6 +24,14 @@ public class ExcelReader {
 	}
 
 	public LinkedList<LinkedList<String>> getSheetData(int page, int INDEX_READTYPE) {
+		return getSheetData(file, page, INDEX_READTYPE);
+	}
+
+	public void showDatas(int page, int INDEX_READTYPE) {
+		showDatas(file, page, INDEX_READTYPE);
+	}
+	
+	public static LinkedList<LinkedList<String>> getSheetData(File file, int page, int INDEX_READTYPE) {
 		LinkedList<LinkedList<String>> outDatas = new LinkedList<LinkedList<String>>();
 		try {
 			InputStream is = new FileInputStream(file);
@@ -59,7 +67,7 @@ public class ExcelReader {
 		return (INDEX_READTYPE == 1) ? removeNullColumn(outDatas) : outDatas;
 	}
 
-	private LinkedList<LinkedList<String>> removeNullColumn(
+	private static LinkedList<LinkedList<String>> removeNullColumn(
 			LinkedList<LinkedList<String>> datas) {
 		if (datas == null) {
 			return null;
@@ -83,7 +91,7 @@ public class ExcelReader {
 		return datas;
 	}
 
-	private boolean isColumnAllNull(Cell[] columns) {
+	private static boolean isColumnAllNull(Cell[] columns) {
 		for (int i = 0; i < columns.length; i++) {
 			String s = columns[i].getContents();
 			if (!s.equals("")) {
@@ -93,22 +101,22 @@ public class ExcelReader {
 		return true;
 	}
 
-	public File getFile() {
-		return file;
-	}
-
-	public void setFile(File file) {
-		this.file = file;
-	}
-
-	public void showDatas(int page, int INDEX_READTYPE) {
-		LinkedList<LinkedList<String>> datas = getSheetData(page, INDEX_READTYPE);
+	public static void showDatas(File file, int page, int INDEX_READTYPE) {
+		LinkedList<LinkedList<String>> datas = getSheetData(file, page, INDEX_READTYPE);
 		for (int i = 0; i < datas.size(); i++) {
 			for (int j = 0; j < datas.get(i).size(); j++) {
 				System.out.print(datas.get(i).get(j) + " || ");
 			}
 			System.out.println();
 		}
+	}
+	
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
 	}
 
 	public static void main(String[] args) {

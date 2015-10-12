@@ -10,27 +10,34 @@ import pers.hck.common.CommonData;
 
 public class FileWriter {
 	private File file;
-	private String encode;
+	private static String encode = CommonData.DEFAULT_ENCODE_CHINESE;
 
 	public FileWriter() {
 		this.file = CommonData.DEFAULT_FILE;
-		this.encode = CommonData.DEFAULT_ENCODE_CHINESE;
 	}
 
 	public FileWriter(File file, String encode) {
 		this.file = file;
-		this.encode = encode;
+		FileWriter.encode = encode;
 	}
 
 	public void write(List<String> inDatas) {
-		if (writeFile(inDatas)) {
+		write(file, inDatas);
+	}
+
+	public boolean writeFile(List<String> inDatas) {
+		return writeFile(file, inDatas);
+	}
+	
+	public static void write(File file, List<String> inDatas) {
+		if (writeFile(file, inDatas)) {
 			System.out.println("Write file: " + file.getPath() + " successful!");
 		} else {
 			System.out.println("Write file: " + file.getPath() + " fail!");
 		}
 	}
 
-	public boolean writeFile(List<String> inDatas) {
+	public static boolean writeFile(File file, List<String> inDatas) {
 		if (file.getParentFile() != null) {
 			file.getParentFile().mkdirs();
 		}

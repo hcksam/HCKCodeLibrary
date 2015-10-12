@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 
-public class FileHandler {
+public class FileUtil {
 	public static boolean copyFile(File inFile, File outFile) {
 		try {
 			outFile.getParentFile().mkdirs();
@@ -26,4 +26,18 @@ public class FileHandler {
 		}
 	}
 	
+	public static boolean moveFile(File inFile, File outFile) {
+		try {
+			boolean done = copyFile(inFile, outFile);
+
+			if (done){
+				return inFile.delete();
+			}else{
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
