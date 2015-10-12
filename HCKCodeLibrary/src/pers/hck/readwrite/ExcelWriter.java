@@ -36,34 +36,38 @@ public class ExcelWriter {
 	}
 	
 	public boolean writeToExcel(LinkedList<LinkedList<String>> datas) {
-		return writeToExcel(datas, 0, null, true);
+		return writeToExcel(datas, 0, null, true, null);
 	}
 	
 	public boolean writeToExcel(LinkedList<LinkedList<String>> datas, String title) {
-		return writeToExcel(datas, 0, title, true);
+		return writeToExcel(datas, 0, title, true, null);
 	}
 	
 	public boolean writeToExcel(LinkedList<LinkedList<String>> datas, String title, boolean contentBorder) {
-		return writeToExcel(datas, 0, title, contentBorder);
+		return writeToExcel(datas, 0, title, contentBorder, null);
 	}
 	
-	public boolean writeToExcel(LinkedList<LinkedList<String>> datas, int page, String title, boolean contentBorder) {
-		return writeToExcel(file, datas, page, title, contentBorder);
+	public boolean writeToExcel(LinkedList<LinkedList<String>> datas, String title, boolean contentBorder, Integer columnTitleLine) {
+		return writeToExcel(datas, 0, title, contentBorder, columnTitleLine);
+	}
+	
+	public boolean writeToExcel(LinkedList<LinkedList<String>> datas, int page, String title, boolean contentBorder, Integer columnTitleLine) {
+		return writeToExcel(file, datas, page, title, contentBorder, columnTitleLine);
 	}
 	
 	public static boolean writeToExcel(File file, LinkedList<LinkedList<String>> datas) {
-		return writeToExcel(file, datas, 0, null, true);
+		return writeToExcel(file, datas, 0, null, true, null);
 	}
 	
 	public static boolean writeToExcel(File file, LinkedList<LinkedList<String>> datas, String title) {
-		return writeToExcel(file, datas, 0, title, true);
+		return writeToExcel(file, datas, 0, title, true, null);
 	}
 	
 	public static boolean writeToExcel(File file, LinkedList<LinkedList<String>> datas, String title, boolean contentBorder) {
-		return writeToExcel(file, datas, 0, title, contentBorder);
+		return writeToExcel(file, datas, 0, title, contentBorder, null);
 	}
 	
-	public static boolean writeToExcel(File file, LinkedList<LinkedList<String>> datas, int page, String title, boolean contentBorder) {
+	public static boolean writeToExcel(File file, LinkedList<LinkedList<String>> datas, int page, String title, boolean contentBorder, Integer columnTitleLine) {
 		try {
 			if (!file.getParentFile().exists()){
 				file.getParentFile().mkdirs();
@@ -107,12 +111,36 @@ public class ExcelWriter {
 				titleWidth = (titleWidth > TitleMinWidth)? titleWidth:TitleMinWidth;
 			}
 			
+			LinkedList<String> columnTitles = new LinkedList<>();
+			int rowIndex = (title == null)? 0:1;
+			int columnTitleLineErr = 0;
 			for (int i=0;i<datas.size();i++){
 				List<String> row = datas.get(i);
-				int rowIndex = (title == null)? i:i+1;
+				boolean border = i == 0;
+				
+				if (columnTitleLine != null){
+					if (i == 0){
+						columnTitles = new LinkedList<>(row);
+					}
+					if ((rowIndex+1-columnTitleLineErr) % columnTitleLine == 0){
+						for (int j=0;j<columnTitles.size();j++){
+							String column = columnTitles.get(j);
+							WritableCellFormat format = borderCellFormat;
+							Label cell = new Label(j, rowIndex, column, format);
+							sheet.addCell(cell);
+							int columnWidth = (!CommonFunction.isNull(column) && !CommonFunction.isDate(column) && !CommonFunction.isASCII(column))? 
+									WordWidth * column.length():ASCIIWidth * column.length();
+							columnWidth = (columnWidth > MinWidth)? columnWidth:MinWidth;
+							maxWidth[j] = (maxWidth[j] == 0)? columnWidth:(maxWidth[j] > columnWidth)? maxWidth[j]:columnWidth;
+						}
+						rowIndex++;
+						columnTitleLineErr++;
+					}
+				}
+				
 				for (int j=0;j<row.size();j++){
-					String column = String.valueOf(row.get(j));
-					WritableCellFormat format = (contentBorder || i == 0)? borderCellFormat:cellFormat;
+					String column = row.get(j);
+					WritableCellFormat format = (contentBorder || border)? borderCellFormat:cellFormat;
 					Label cell = new Label(j, rowIndex, column, format);
 					sheet.addCell(cell);
 					int columnWidth = (!CommonFunction.isNull(column) && !CommonFunction.isDate(column) && !CommonFunction.isASCII(column))? 
@@ -120,6 +148,7 @@ public class ExcelWriter {
 					columnWidth = (columnWidth > MinWidth)? columnWidth:MinWidth;
 					maxWidth[j] = (maxWidth[j] == 0)? columnWidth:(maxWidth[j] > columnWidth)? maxWidth[j]:columnWidth;
 				}
+				rowIndex++;
 			}
 			
 			int columnWidthSum = 0;
