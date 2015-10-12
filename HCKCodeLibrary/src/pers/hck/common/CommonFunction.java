@@ -564,7 +564,6 @@ public class CommonFunction {
 			if (object instanceof Date){
 				Date date = (Date) object;
 				outString = String.valueOf(date.getTime());
-				System.out.println(outString);
 			}
 			return outString;
 		} catch (Exception e) {
