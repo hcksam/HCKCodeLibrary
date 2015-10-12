@@ -75,8 +75,13 @@ public class CommonFunction {
 			if (inDate.equals("")) {
 				inDate = null;
 			}
-			SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-			return sdf.parse(inDate);
+			if (dateFormat == null){
+				long inDateLong = Long.parseLong(inDate);
+				return new Date(inDateLong);
+			}else{
+				SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+				return sdf.parse(inDate);
+			}
 		} catch (NullPointerException npe) {
 			if (!nullable) {
 				System.out.println("InDate: " + inDate);
@@ -93,6 +98,10 @@ public class CommonFunction {
 	
 	public static Date getDate(String inDate) {
 		return getDate(inDate, CommonData.DEFAULT_DATE_FORMAT);
+	}
+	
+	public static Date getDateByLongString(String inDate) {
+		return getDate(inDate, null);
 	}
 
 	public static Date getDate(String inDate, String dateFormat) {
@@ -536,6 +545,28 @@ public class CommonFunction {
 	public static Integer convertObjectToInteger(Object object, boolean nullable) {
 		try {
 			return Integer.parseInt(String.valueOf(object));
+		} catch (Exception e) {
+			if (!nullable) {
+				System.out.println("Convert Object to Integer Fail!");
+				e.printStackTrace();
+			}
+			return null;
+		}
+	}
+	
+	public static String convertObjectToString(Object object) {
+		return convertObjectToString(object, true);
+	}
+	
+	public static String convertObjectToString(Object object, boolean nullable) {
+		try {
+			String outString = String.valueOf(object);
+			if (object instanceof Date){
+				Date date = (Date) object;
+				outString = String.valueOf(date.getTime());
+				System.out.println(outString);
+			}
+			return outString;
 		} catch (Exception e) {
 			if (!nullable) {
 				System.out.println("Convert Object to Integer Fail!");
