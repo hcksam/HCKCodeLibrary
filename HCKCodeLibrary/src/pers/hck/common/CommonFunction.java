@@ -35,6 +35,16 @@ public class CommonFunction {
 	    return true;
 	}
 	
+	public static boolean isInteger(String inString) {
+	    try {
+	      Integer.parseInt(inString);
+	      return true;
+	    }
+	    catch(Exception e) {
+	      return false;
+	    }
+	}
+	
 	public static boolean isNull(String inString) {
 		boolean isNull = (inString == null || inString.equals("") || inString.equalsIgnoreCase("null"));
 		return isNull;
