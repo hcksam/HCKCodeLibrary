@@ -140,6 +140,9 @@ public class ExcelWriter {
 				
 				for (int j=0;j<row.size();j++){
 					String column = row.get(j);
+					if (column == null){
+						column = "";
+					}
 					WritableCellFormat format = (contentBorder || border)? borderCellFormat:cellFormat;
 					Label cell = new Label(j, rowIndex, column, format);
 					sheet.addCell(cell);
