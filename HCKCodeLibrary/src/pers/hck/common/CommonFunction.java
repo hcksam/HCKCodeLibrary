@@ -503,44 +503,54 @@ public class CommonFunction {
 	}
 
 	public static LinkedList<String> replaceNullStringToNothing(
-			LinkedList<String> datas) {
-		for (int i = 0; i < datas.size(); i++) {
-			String data = datas.get(i);
-			if (data == null) {
-				datas.set(i, "");
-			} else {
-				if (data.equalsIgnoreCase("null")) {
-					datas.set(i, "");
+			List<String> data) {
+		LinkedList<String> list = new LinkedList<>();
+		try {
+			for (String line:data){
+				if (line == null || line.equalsIgnoreCase("null")){
+					list.add("");
+				}else{
+					list.add(line);
 				}
 			}
+			return list;
+		} catch (Exception e) {
+			return list;
 		}
-		return datas;
 	}
 	
 	public static LinkedList<String> replaceNothingStringToNull(
-			LinkedList<String> datas) {
-		for (int i = 0; i < datas.size(); i++) {
-			String data = datas.get(i);
-			if (data != null) {
-				if (data.equalsIgnoreCase("null") || data.equals("")) {
-					datas.set(i, null);
+			List<String> data) {
+		LinkedList<String> list = new LinkedList<>();
+		try {
+			for (String line:data){
+				if (line != null && (line.equalsIgnoreCase("null") || line.equals(""))){
+					list.add(null);
+				}else{
+					list.add(line);
 				}
 			}
+			return list;
+		} catch (Exception e) {
+			return list;
 		}
-		return datas;
 	}
 
 	public static LinkedList<String> replaceNullStringToNull(
-			LinkedList<String> datas) {
-		for (int i = 0; i < datas.size(); i++) {
-			String data = datas.get(i);
-			if (data != null) {
-				if (data.equalsIgnoreCase("null")) {
-					datas.set(i, null);
+			List<String> data) {
+		LinkedList<String> list = new LinkedList<>();
+		try {
+			for (String line:data){
+				if (line != null && line.equalsIgnoreCase("null")){
+					list.add(null);
+				}else{
+					list.add(line);
 				}
 			}
+			return list;
+		} catch (Exception e) {
+			return list;
 		}
-		return datas;
 	}
 
 	public static int convertObjectToInt(Object object) {
@@ -582,6 +592,18 @@ public class CommonFunction {
 				e.printStackTrace();
 			}
 			return null;
+		}
+	}
+	
+	public static LinkedList<String> convertArrayToLinkedList(String[] array) {
+		LinkedList<String> list = new LinkedList<>();
+		try{
+			for (String string:array){
+				list.add(string);
+			}
+			return list;
+		} catch (Exception e) {
+			return list;
 		}
 	}
 
