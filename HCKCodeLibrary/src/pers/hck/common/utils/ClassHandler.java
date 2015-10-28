@@ -259,14 +259,18 @@ public class ClassHandler {
 		}
 	}
 	
-	public static String getBeanValueTypeByValueName(Class bean, String beanValueName){
+	public static String getBeanValueTypeByValueName(Class bean, String beanValueName, boolean longType){
 		try {
 			Field[] fields = bean.getDeclaredFields();
 			for (Field field : fields) {
 				String value = field.getName();
 				String valueType = field.getGenericType().toString();
 				if (beanValueName.equals(value)){
-					valueType = valueType.substring(valueType.lastIndexOf('.')+1);
+					if (!longType){
+						valueType = valueType.substring(valueType.lastIndexOf('.')+1);
+					}else{
+						valueType = valueType.substring(valueType.lastIndexOf(' ')+1);
+					}
 					return valueType;
 				}
 			}
@@ -279,7 +283,16 @@ public class ClassHandler {
 	
 	public static String getBeanValueTypeByValueName(String beanPath, String beanValueName){
 		try {
-			return getBeanValueTypeByValueName(Class.forName(beanPath), beanValueName);
+			return getBeanValueTypeByValueName(Class.forName(beanPath), beanValueName, false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static String getBeanValueLongTypeByValueName(String beanPath, String beanValueName){
+		try {
+			return getBeanValueTypeByValueName(Class.forName(beanPath), beanValueName, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
