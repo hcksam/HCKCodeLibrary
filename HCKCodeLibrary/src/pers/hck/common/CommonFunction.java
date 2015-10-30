@@ -574,6 +574,22 @@ public class CommonFunction {
 		}
 	}
 	
+	public static Long convertObjectToLong(Object object) {
+		return convertObjectToLong(object, true);
+	}
+	
+	public static Long convertObjectToLong(Object object, boolean nullable) {
+		try {
+			return Long.parseLong(String.valueOf(object));
+		} catch (Exception e) {
+			if (!nullable) {
+				System.out.println("Convert Object to Integer Fail!");
+				e.printStackTrace();
+			}
+			return null;
+		}
+	}
+	
 	public static String convertObjectToString(Object object) {
 		return convertObjectToString(object, true);
 	}
