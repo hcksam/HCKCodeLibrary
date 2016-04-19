@@ -456,7 +456,7 @@ public class CommonFunction {
 		return bs + newChar + es;
 	}
 
-	public static String getReplaceAll(String inString, String targetString,
+	public static String replaceAll(String inString, String targetString,
 			String newString) {
 		LinkedList<Integer> indexs = getAllIndexOf(inString, targetString);
 		String outString = "";
