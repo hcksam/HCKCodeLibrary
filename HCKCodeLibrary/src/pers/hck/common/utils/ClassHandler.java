@@ -45,7 +45,7 @@ public class ClassHandler {
 			}
 			return methodNames;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
@@ -85,7 +85,7 @@ public class ClassHandler {
 			}
 			return methodNames;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
@@ -96,9 +96,10 @@ public class ClassHandler {
 	
 	public static LinkedList<String> getBeanGetMethodNames(String beanPath) {
 		try {
-			return getBeanGetMethodNames(Class.forName(beanPath));
+			LinkedList<String> returnList = getBeanGetMethodNames(Class.forName(beanPath));
+			return returnList;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
@@ -109,9 +110,10 @@ public class ClassHandler {
 	
 	public static LinkedList<String> getBeanSetMethodNames(String beanPath) {
 		try {
-			return getBeanSetMethodNames(Class.forName(beanPath));
+			LinkedList<String> returnList = getBeanSetMethodNames(Class.forName(beanPath));
+			return returnList;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
@@ -122,9 +124,10 @@ public class ClassHandler {
 	
 	public static LinkedList<String> getBaseBeanGetMethodNames(String beanPath) {
 		try {
-			return getBaseBeanGetMethodNames(Class.forName(beanPath));
+			LinkedList<String> returnList = getBaseBeanGetMethodNames(Class.forName(beanPath));
+			return returnList;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
@@ -135,9 +138,10 @@ public class ClassHandler {
 	
 	public static LinkedList<String> getBaseBeanSetMethodNames(String beanPath) {
 		try {
-			return getBaseBeanSetMethodNames(Class.forName(beanPath));
+			LinkedList<String> returnList = getBaseBeanSetMethodNames(Class.forName(beanPath));
+			return returnList;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
@@ -148,9 +152,10 @@ public class ClassHandler {
 	
 	public static LinkedList<String> getInsideBeanGetMethodNames(String beanPath, String beanType) {
 		try {
-			return getInsideBeanGetMethodNames(Class.forName(beanPath), beanType);
+			LinkedList<String> returnList = getInsideBeanGetMethodNames(Class.forName(beanPath), beanType);
+			return returnList;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
@@ -161,18 +166,20 @@ public class ClassHandler {
 	
 	public static LinkedList<String> getInsideBeanSetMethodNames(String beanPath, String beanType) {
 		try {
-			return getInsideBeanSetMethodNames(Class.forName(beanPath), beanType);
+			LinkedList<String> returnList = getInsideBeanSetMethodNames(Class.forName(beanPath), beanType);
+			return returnList;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
 
 	public static LinkedList<String> getBeanValueNames(String beanPath) {
 		try {
-			return getBeanValueNames(Class.forName(beanPath));
+			LinkedList<String> returnList = getBeanValueNames(Class.forName(beanPath));
+			return returnList;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
@@ -187,7 +194,7 @@ public class ClassHandler {
 			}
 			return valueNames;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
@@ -210,25 +217,27 @@ public class ClassHandler {
 			}
 			return valueNames;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
 	
 	public static LinkedList<String> getBaseBeanValueNames(String beanPath) {
 		try {
-			return getBaseBeanValueNames(Class.forName(beanPath));
+			LinkedList<String> returnList = getBaseBeanValueNames(Class.forName(beanPath));
+			return returnList;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
 	
 	public static LinkedList<String> getInsideBeanNames(String beanPath, String beanType) {
 		try {
-			return getInsideBeanNames(Class.forName(beanPath), beanType);
+			LinkedList<String> returnList = getInsideBeanNames(Class.forName(beanPath), beanType);
+			return returnList;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
@@ -254,7 +263,7 @@ public class ClassHandler {
 			}
 			return valueNames;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
@@ -276,32 +285,36 @@ public class ClassHandler {
 			}
 			return null;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
 	
 	public static String getBeanValueTypeByValueName(String beanPath, String beanValueName){
 		try {
-			return getBeanValueTypeByValueName(Class.forName(beanPath), beanValueName, false);
+			Class inClass = Class.forName(beanPath);
+			String returnValue = getBeanValueTypeByValueName(inClass, beanValueName, false);
+			return returnValue;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
 	
 	public static String getBeanValueLongTypeByValueName(String beanPath, String beanValueName){
 		try {
-			return getBeanValueTypeByValueName(Class.forName(beanPath), beanValueName, true);
+			Class inClass = Class.forName(beanPath);
+			String returnValue = getBeanValueTypeByValueName(Class.forName(beanPath), beanValueName, true);
+			return returnValue;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+		System.out.println(ClassHandler.getBeanValueTypeByValueName(null, null));
 	}
 
 }
