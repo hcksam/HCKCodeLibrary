@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class CommonFunction {
 	private final static String MS = "@";
@@ -621,6 +623,22 @@ public class CommonFunction {
 		} catch (Exception e) {
 			return list;
 		}
+	}
+	
+	public static Map<String,String> conventReversionMap(Map<String,String> map){
+		return conventReversionMap(map, false);
+	}
+	
+	public static Map<String,String> conventReversionMap(Map<String,String> map, boolean CaseSensitive){
+		Map<String,String> ReversionMap = (CaseSensitive)? 
+				new TreeMap<String, String>():
+				new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
+		
+		for (String key:map.keySet()){
+			ReversionMap.put(map.get(key), key);
+		}
+		
+		return ReversionMap;
 	}
 
 	private static boolean isSlantingSign(char inChar) {
