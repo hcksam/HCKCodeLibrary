@@ -205,6 +205,7 @@ public class ClassHandler {
 		baseType.add("class java.lang.Integer");
 		baseType.add("class java.lang.String");
 		baseType.add("class java.util.Date");
+		baseType.add("class java.lang.Double");
 		
 		try {
 			Field[] fields = bean.getDeclaredFields();

@@ -1,7 +1,4 @@
-/pers/
-/diff_match_patch$Diff.class
-/diff_match_patch$LinesToCharsResult.class
-/diff_match_patch$Operation.class
-/diff_match_patch$Patch.class
-/diff_match_patch.class
 /TestTextPatchUtils.class
+/log4j.properties
+/log4j.properties.sample
+/pers/

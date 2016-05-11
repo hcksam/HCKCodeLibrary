@@ -585,7 +585,23 @@ public class CommonFunction {
 			return Long.parseLong(String.valueOf(object));
 		} catch (Exception e) {
 			if (!nullable) {
-				System.out.println("Convert Object to Integer Fail!");
+				System.out.println("Convert Object to Long Fail!");
+				e.printStackTrace();
+			}
+			return null;
+		}
+	}
+	
+	public static Double convertObjectToDouble(Object object) {
+		return convertObjectToDouble(object, true);
+	}
+	
+	public static Double convertObjectToDouble(Object object, boolean nullable) {
+		try {
+			return Double.parseDouble(String.valueOf(object));
+		} catch (Exception e) {
+			if (!nullable) {
+				System.out.println("Convert Object to Double Fail!");
 				e.printStackTrace();
 			}
 			return null;
@@ -606,7 +622,7 @@ public class CommonFunction {
 			return outString;
 		} catch (Exception e) {
 			if (!nullable) {
-				System.out.println("Convert Object to Integer Fail!");
+				System.out.println("Convert Object to String Fail!");
 				e.printStackTrace();
 			}
 			return null;
