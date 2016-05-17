@@ -656,6 +656,28 @@ public class CommonFunction {
 		
 		return ReversionMap;
 	}
+	
+	public static String convertPackageToPath(String packagePath) {
+		if (packagePath != null && packagePath.length()>0 && !packagePath.equals('.')){
+			boolean haveLastSign = packagePath.charAt(packagePath.length()-1) == '.';
+			String newPackagePath = (haveLastSign)? packagePath.substring(0, packagePath.length()-1):packagePath;
+			String path = newPackagePath.replaceAll("\\.", "\\/");
+			return path;
+		}else{
+			return null;
+		}
+	}
+	
+	public static String convertPathToPackage(String path) {
+		if (path != null && path.length()>0 && !path.equals('/')){
+			boolean haveLastSign = path.charAt(path.length()-1) == '/';
+			String newPath = (haveLastSign)? path.substring(0, path.length()-1):path;
+			String packagePath = newPath.replaceAll("\\/", "\\.");
+			return packagePath;
+		}else{
+			return null;
+		}
+	}
 
 	private static boolean isSlantingSign(char inChar) {
 		return (inChar == US2.charAt(0) || inChar == US3.charAt(0));
@@ -702,6 +724,19 @@ public class CommonFunction {
 	        }
 	    }
 	    return -1;
+	}
+	
+	public static String removeFileExtName(String fileName) {
+		if (fileName != null){
+			int index = fileName.lastIndexOf('.');
+			String outName = fileName;
+			if (index > 0){
+				outName = fileName.substring(0, index);
+			}
+		    return outName;
+		}else{
+			return null;
+		}
 	}
 
 	public static void main(String args[]) {
