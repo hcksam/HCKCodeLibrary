@@ -504,7 +504,7 @@ public class CommonFunction {
 		return outString;
 	}
 
-	public static LinkedList<String> replaceNullStringToNothing(
+	public static LinkedList<String> replaceNullToNothingString(
 			List<String> data) {
 		LinkedList<String> list = new LinkedList<>();
 		try {
@@ -545,6 +545,23 @@ public class CommonFunction {
 			for (String line:data){
 				if (line != null && line.equalsIgnoreCase("null")){
 					list.add(null);
+				}else{
+					list.add(line);
+				}
+			}
+			return list;
+		} catch (Exception e) {
+			return list;
+		}
+	}
+	
+	public static LinkedList<String> replaceNullToNullString(
+			List<String> data) {
+		LinkedList<String> list = new LinkedList<>();
+		try {
+			for (String line:data){
+				if (line == null){
+					list.add("null");
 				}else{
 					list.add(line);
 				}
