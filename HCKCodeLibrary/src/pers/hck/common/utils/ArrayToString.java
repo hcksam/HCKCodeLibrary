@@ -3,9 +3,10 @@ package pers.hck.common.utils;
 import java.util.List;
 
 public class ArrayToString {
-	public final static int INDEX_FORMAT_NORMAL = 0;
-	public final static int INDEX_FORMAT_STRING = 1;
-	public final static int INDEX_FORMAT_INTGER = 2;
+	public final static int INDEX_FORMAT_AUTO = 0;
+	public final static int INDEX_FORMAT_OBJECT = 1;
+	public final static int INDEX_FORMAT_STRING = 2;
+	public final static int INDEX_FORMAT_INTEGER = 3;
 	
 	public static String toString(Integer[] array){
 		return toString(array, false);
@@ -15,8 +16,8 @@ public class ArrayToString {
 		return toString(array, false);
 	}
 	
-	public static String toString(List<Object> array){
-		return toString(array, INDEX_FORMAT_NORMAL);
+	public static String toString(List array){
+		return toString(array, INDEX_FORMAT_AUTO);
 	}
 	
 	public static String toJSArray(Integer[] array){
@@ -27,7 +28,7 @@ public class ArrayToString {
 		return toString(array,"[]",false);
 	}
 	
-	public static String toJSArray(List<Object> array){
+	public static String toJSArray(List array){
 		return toString(array,"[]",INDEX_FORMAT_STRING);
 	}
 	
@@ -53,7 +54,7 @@ public class ArrayToString {
 		return brackets.charAt(0)+toString(array, integerFormat)+brackets.charAt(1);
 	}
 	
-	public static String toString(List<Object> array, String brackets, int INDEX_FORMAT){
+	public static String toString(List array, String brackets, int INDEX_FORMAT){
 		if (brackets == null){
 			return toString(array, INDEX_FORMAT);
 		}
@@ -92,15 +93,15 @@ public class ArrayToString {
 		return s;
 	}
 	
-	public static String toString(List<Object> array, int INDEX_FORMAT){
+	public static String toString(List array, int INDEX_FORMAT){
 		String s = "";
 		for (int i=0;i<array.size();i++){
 			Object object = array.get(i);
 			switch (INDEX_FORMAT){
-			case INDEX_FORMAT_NORMAL:
+			case INDEX_FORMAT_AUTO:
 				if (object instanceof String){
 					s += (i+1 < array.size())? "\""+object+"\",":"\""+object+"\"";
-				}else if (object instanceof Integer){
+				}else if (object instanceof Integer || object instanceof Object){
 					s += (i+1 < array.size())? object+",":object;
 				}else {
 					return null;
@@ -109,7 +110,8 @@ public class ArrayToString {
 			case INDEX_FORMAT_STRING:
 				s += (i+1 < array.size())? "\""+object+"\",":"\""+object+"\"";
 				break;
-			case INDEX_FORMAT_INTGER:
+			case INDEX_FORMAT_OBJECT:
+			case INDEX_FORMAT_INTEGER:
 				s += (i+1 < array.size())? object+",":object;
 				break;
 			}
