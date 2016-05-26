@@ -755,6 +755,14 @@ public class CommonFunction {
 			return null;
 		}
 	}
+	
+	public static boolean isString(Object object){
+		if (object instanceof String){
+			return true;
+		}else {
+			return false;
+		}
+	}
 
 	public static void main(String args[]) {
 		System.out.println(getLastDateFile("C:/temp",
