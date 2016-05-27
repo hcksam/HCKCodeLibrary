@@ -763,6 +763,11 @@ public class CommonFunction {
 			return false;
 		}
 	}
+	
+	public static String addLeadingZeroes(int digit, int integer){
+		String format = "%0"+digit+"d";
+		return String.format(format, integer);
+	}
 
 	public static void main(String args[]) {
 		System.out.println(getLastDateFile("C:/temp",
