@@ -10,5 +10,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/com.mysql.jdbc_5.1.5.jar"/>
 	<classpathentry kind="lib" path="lib/jxl.jar" sourcepath="lib/jexcelapi_2_6_12.zip"/>
+	<classpathentry kind="lib" path="lib/java-json.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
