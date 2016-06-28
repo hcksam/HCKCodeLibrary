@@ -538,7 +538,7 @@ public class CommonFunction {
 		}
 	}
 
-	public static LinkedList<String> replaceNullStringToNull(
+	public static LinkedList<String> replaceNullTextToNull(
 			List<String> data) {
 		LinkedList<String> list = new LinkedList<>();
 		try {
@@ -555,7 +555,7 @@ public class CommonFunction {
 		}
 	}
 	
-	public static LinkedList<String> replaceNullToNullString(
+	public static LinkedList<String> replaceNullToNullText(
 			List<String> data) {
 		LinkedList<String> list = new LinkedList<>();
 		try {
@@ -626,15 +626,20 @@ public class CommonFunction {
 	}
 	
 	public static String convertObjectToString(Object object) {
-		return convertObjectToString(object, true);
+		return convertObjectToString(object, true, true);
 	}
 	
-	public static String convertObjectToString(Object object, boolean nullable) {
+	public static String convertObjectToString(Object object, boolean nullable, boolean nullText) {
 		try {
 			String outString = String.valueOf(object);
 			if (object instanceof Date){
 				Date date = (Date) object;
 				outString = String.valueOf(date.getTime());
+			}
+			if (nullText){
+				if (outString.equalsIgnoreCase("null")){
+					outString = null;
+				}
 			}
 			return outString;
 		} catch (Exception e) {
