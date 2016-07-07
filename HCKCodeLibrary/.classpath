@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="lib/poi-3.9-20121203.jar"/>
-	<classpathentry kind="lib" path="lib/poi-scratchpad-3.9-20121203.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/com.mysql.jdbc_5.1.5.jar"/>
-	<classpathentry kind="lib" path="lib/jxl.jar" sourcepath="lib/jexcelapi_2_6_12.zip"/>
-	<classpathentry kind="lib" path="lib/java-json.jar"/>
+	<classpathentry kind="lib" path="libs/com.mysql.jdbc_5.1.5.jar"/>
+	<classpathentry kind="lib" path="libs/java-json.jar"/>
+	<classpathentry kind="lib" path="libs/jxl.jar"/>
+	<classpathentry kind="lib" path="libs/poi-3.9-20121203.jar"/>
+	<classpathentry kind="lib" path="libs/poi-scratchpad-3.9-20121203.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
