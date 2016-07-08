@@ -89,6 +89,15 @@ public class CommonFunction {
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		return sdf.format(inDate);
 	}
+	
+	public static Date getDate(Object object) {
+		try {
+			Date date = (Date) object;
+			return date;
+		} catch (Exception e) {
+			return null;
+		}
+	}
 
 	public static Date getDate(String inDate, String dateFormat,
 			boolean nullable) {
