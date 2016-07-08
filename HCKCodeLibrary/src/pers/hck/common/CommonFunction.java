@@ -65,6 +65,15 @@ public class CommonFunction {
 	public static boolean isDate(String inString) {
 		return isDate(inString, CommonData.DEFAULT_DATE_FORMAT);
 	}
+	
+	public static boolean isDate(Object object) {
+		try {
+			Date date = (Date) object;
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
 	public static String getStringToday(String dateFormat) {
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
