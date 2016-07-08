@@ -68,8 +68,10 @@ public class CommonFunction {
 	
 	public static boolean isDate(Object object) {
 		try {
-			Date date = (Date) object;
-			return true;
+			if (object == null){
+				return false;
+			}
+			return object instanceof Date;
 		} catch (Exception e) {
 			return false;
 		}
