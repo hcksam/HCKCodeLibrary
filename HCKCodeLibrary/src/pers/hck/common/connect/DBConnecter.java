@@ -1,5 +1,6 @@
 package pers.hck.common.connect;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,10 +9,12 @@ import java.sql.Statement;
 
 public class DBConnecter {
 	private String host = "127.0.0.1";
+	private String port = "3306";
 	private String dbName = "test";
 	private String enCoding = "utf8";
 	private String user = "admin";
 	private String password = "admin";
+	private String sid = null;
 
 	private Connection connection = null;
 
@@ -30,12 +33,35 @@ public class DBConnecter {
 		connectDB();
 	}
 
+	public DBConnecter(String host, String port, String user, String password, String sid) {
+		super();
+		this.host = host;
+		this.port = port;
+		this.user = user;
+		this.password = password;
+		this.sid = sid;
+		connectDB();
+	}
+
 	public void connectDB() {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://" + host
-					+ "/" + dbName + "?useUnicode=true&characterEncoding="
-					+ enCoding, user, password);
+			if (sid == null){
+				Class.forName("com.mysql.jdbc.Driver");
+				connection = DriverManager.getConnection(
+						"jdbc:mysql://"
+						+ host + ":"
+						+ port + "/"
+						+ dbName + "?useUnicode=true&characterEncoding="
+						+ enCoding, user, password);
+			}else{
+				Class.forName("oracle.jdbc.driver.OracleDriver");
+				connection = DriverManager.getConnection(
+						"jdbc:oracle:thin:@"
+						+ host + ":"
+						+ port + ":"
+						+ sid + "?useUnicode=true&characterEncoding="
+						+ enCoding, user, password);
+			}
 		} catch (ClassNotFoundException ce) {
 			System.out.println("JDBC Driver Class Not Found: " + ce.toString());
 		} catch (Exception e) {
@@ -135,6 +161,35 @@ public class DBConnecter {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getPort() {
+		return port;
+	}
+
+	public void setPort(String port) {
+		this.port = port;
+	}
+
+	public String getSid() {
+		return sid;
+	}
+
+	public void setSid(String sid) {
+		this.sid = sid;
+	}
+	
+	public static void setTnsAdmin() {
+	    String tnsAdmin = System.getenv("TNS_ADMIN");
+	    if (tnsAdmin == null) {
+	        String oracleHome = System.getenv("ORACLE_HOME");
+	        if (oracleHome == null) {
+	        	System.out.println("Failed for setting TNS by use env variables");
+	            return; //failed to find any useful env variables
+	        }
+	        tnsAdmin = oracleHome + File.separatorChar + "network" + File.separatorChar + "admin";
+	    }
+//	    System.setProperty("oracle.net.tns_admin", tnsAdmin);
 	}
 
 	public static void main(String[] args) {
